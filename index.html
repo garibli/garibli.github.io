@@ -504,7 +504,7 @@ function layout() {
         return { tx: W * .3, gy, trunk: (gy - top) * .2, maxD: 8, w0: Math.max(9, (gy - top) * .045), top,
                  net: [W * .4, W * .98, H * .07, gy - (gy - top) * .3], hill: W * 1.1 };
       })()
-    : { tx: W * .25, gy: H * .84, trunk: H * .15, maxD: 10, w0: Math.max(14, H * .03), top: H * .1, net: [W * .36, W * .97, H * .1, H * .5], hill: W * .7 };
+    : { oak: true, tx: W * .25, gy: H * .84, trunk: H * .17, maxD: 10, w0: Math.max(20, H * .05), top: H * .1, net: [W * .36, W * .97, H * .1, H * .5], hill: W * .7 };
 }
 
 function build() {
@@ -566,6 +566,8 @@ function build() {
       grow(x2, y2, a, len * f, w * .7, d + 1, id);
     }
   }
+  if (L.oak) growOak(R);
+  else {
   grow(L.tx, L.gy + 4, -Math.PI / 2 - .04, L.trunk, L.w0, 0, -1);
   // fit the crown inside the screen: scale around the trunk base
   {
@@ -575,6 +577,87 @@ function build() {
     const fx = x => L.tx + (x - L.tx) * k, fy = y => L.gy + (y - L.gy) * k;
     for (const s of segs) { s.x = fx(s.x); s.y = fy(s.y); s.cx = fx(s.cx); s.cy = fy(s.cy); s.x2 = fx(s.x2); s.y2 = fy(s.y2); s.w *= Math.sqrt(k); }
     for (const t of tips) { t.x = fx(t.x); t.y = fy(t.y); }
+  }
+  }
+
+  /* laptop tree: space colonization inside a dome shaped crown, pipe model thickness */
+  function growOak(R) {
+    const seg = Math.max(4.5, H * .0072), infl = H * .07, kill = seg * 1.45;
+    const trunkTop = L.gy - L.trunk;
+    const ry = (trunkTop - 6 - L.top) / 1.5, cy0 = L.top + ry;
+    const cx0 = L.tx + W * .035;
+    const ht = document.querySelector(".hero-text"), textLeft = ht ? ht.getBoundingClientRect().left - scene.getBoundingClientRect().left : W;
+    const rx = Math.max(W * .17, Math.min(W * .235, cx0 - W * .035, textLeft - 40 - cx0));   // keep leaves out from behind the name
+    const cutY = cy0 + ry * .5;
+    // attraction points: inside the ellipse, flattened at the bottom, a little lumpy at the edge
+    const att = [];
+    while (att.length < 1500) {
+      const x = cx0 + (R() * 2 - 1) * rx, y = cy0 + (R() * 2 - 1) * ry;
+      const ang = Math.atan2((y - cy0) / ry, (x - cx0) / rx);
+      const edge = 1 + .07 * Math.sin(ang * 5 + 1.3) + .05 * Math.sin(ang * 9);
+      const d = ((x - cx0) / rx) ** 2 + ((y - cy0) / ry) ** 2;
+      if (d > edge * edge || y > cutY) continue;
+      att.push({ x, y });
+    }
+    // trunk with a gentle S curve
+    const nodes = [];
+    const steps = Math.ceil((L.gy + 4 - trunkTop) / seg);
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      nodes.push({ x: L.tx + Math.sin(t * Math.PI) * W * .006 - t * W * .004, y: L.gy + 4 - t * (L.gy + 4 - trunkTop), p: i - 1, ax: 0, ay: 0, n: 0, kids: 0 });
+      if (i) nodes[i - 1].kids++;
+    }
+    const cell = infl, grid = new Map();
+    const key = (x, y) => ((x / cell) | 0) + "," + ((y / cell) | 0);
+    const addG = i => { const k = key(nodes[i].x, nodes[i].y); (grid.get(k) || grid.set(k, []).get(k)).push(i); };
+    nodes.forEach((_, i) => addG(i));
+    for (let it = 0; it < 500 && att.length; it++) {
+      for (const n of nodes) { n.ax = 0; n.ay = 0; n.n = 0; }
+      for (let a = att.length - 1; a >= 0; a--) {
+        const p = att[a], gx = (p.x / cell) | 0, gy = (p.y / cell) | 0;
+        let best = -1, bd = infl * infl;
+        for (let ix = gx - 1; ix <= gx + 1; ix++) for (let iy = gy - 1; iy <= gy + 1; iy++) {
+          const list = grid.get(ix + "," + iy); if (!list) continue;
+          for (const i of list) { const dx = p.x - nodes[i].x, dy = p.y - nodes[i].y, d2 = dx * dx + dy * dy; if (d2 < bd) { bd = d2; best = i; } }
+        }
+        if (best < 0) continue;
+        if (bd < kill * kill) { att.splice(a, 1); continue; }
+        const d = Math.sqrt(bd), n = nodes[best];
+        n.ax += (p.x - n.x) / d; n.ay += (p.y - n.y) / d; n.n++;
+      }
+      let grew = 0;
+      const len = nodes.length;
+      for (let i = 0; i < len; i++) {
+        const n = nodes[i]; if (!n.n) continue;
+        let dx = n.ax / n.n + (R() - .5) * .12, dy = n.ay / n.n - .06 + (R() - .5) * .12;
+        const m = Math.hypot(dx, dy); if (m < .05) continue;
+        dx /= m; dy /= m;
+        nodes.push({ x: n.x + dx * seg, y: n.y + dy * seg, p: i, ax: 0, ay: 0, n: 0, kids: 0 });
+        n.kids++; addG(nodes.length - 1); grew++;
+      }
+      if (!grew) {   // trunk not yet in reach: extend the top of the trunk upwards
+        const top = nodes.reduce((b, n, i) => n.y < nodes[b].y ? i : b, 0);
+        nodes.push({ x: nodes[top].x, y: nodes[top].y - seg, p: top, ax: 0, ay: 0, n: 0, kids: 0 });
+        nodes[top].kids++; addG(nodes.length - 1);
+      }
+    }
+    // pipe model: a parent is as thick as the branches it carries
+    const r = new Array(nodes.length).fill(0), acc = new Array(nodes.length).fill(0), EXP = 2.15;
+    for (let i = nodes.length - 1; i >= 0; i--) {
+      r[i] = nodes[i].kids ? Math.pow(acc[i], 1 / EXP) : .5;
+      if (nodes[i].p >= 0) acc[nodes[i].p] += Math.pow(r[i], EXP);
+    }
+    const k = (L.w0 / 2) / r[0];
+    for (let i = 0; i < r.length; i++) r[i] = Math.max(.45, r[i] * k);
+    const rmax = r[0];
+    for (let i = 1; i < nodes.length; i++) {
+      const n = nodes[i], P = nodes[n.p];
+      const ratio = r[i] / rmax;
+      segs.push({ x: P.x, y: P.y, cx: (P.x + n.x) / 2, cy: (P.y + n.y) / 2, x2: n.x, y2: n.y,
+        w: r[n.p] + r[i], d: Math.max(0, Math.min(L.maxD, Math.round((1 - Math.sqrt(ratio)) * L.maxD))),
+        parent: n.p - 1, dot: R() < .1 });
+      if (!n.kids || (r[i] < 1.3 && R() < .45)) tips.push({ x: n.x, y: n.y, seg: i - 1 });
+    }
   }
 
   // network edges are drawn behind the tree
@@ -637,7 +720,7 @@ function build() {
     g.lineWidth = Math.max(.7, s.w);
     g.beginPath(); g.moveTo(s.x, s.y); g.quadraticCurveTo(s.cx, s.cy, s.x2, s.y2); g.stroke();
     if (s.w > 3) {   // bark highlight on the sunny side
-      g.strokeStyle = "rgba(255,180,110,.13)"; g.lineWidth = s.w * .3;
+      g.strokeStyle = L.oak ? mix("#3a2414", "#8a5a34", .55 - t * .3) : "rgba(255,180,110,.13)"; g.lineWidth = s.w * .3;
       g.beginPath(); g.moveTo(s.x - s.w * .25, s.y); g.quadraticCurveTo(s.cx - s.w * .25, s.cy, s.x2 - s.w * .25, s.y2); g.stroke();
     }
   }
@@ -649,7 +732,7 @@ function build() {
     g.strokeStyle = s.d < 3 ? "rgba(143,240,255,.9)" : "rgba(61,220,255,.75)";
     g.lineWidth = Math.max(.8, s.w * .09);
     g.beginPath(); g.moveTo(s.x + off, s.y); g.quadraticCurveTo(s.cx + off, s.cy, s.x2 + off, s.y2); g.stroke();
-    if (s.d >= 2 && s.d <= 4) { g.fillStyle = s.d % 2 ? C.cyan : C.gold; g.beginPath(); g.arc(s.x2 + off, s.y2, Math.max(1.2, 3.2 - s.d * .3), 0, 7); g.fill(); }
+    if (s.d >= 2 && s.d <= 4 && s.dot !== false) { g.fillStyle = s.d % 2 ? C.cyan : C.gold; g.beginPath(); g.arc(s.x2 + off, s.y2, Math.max(1.2, 3.2 - s.d * .3), 0, 7); g.fill(); }
   }
   // the chip on the trunk
   const chipY = L.gy - L.trunk * .55, cs = L.w0 * .55;
@@ -672,6 +755,25 @@ function build() {
   /* leaves on the warm side, sparse leaves among the nodes */
   const leafAt = (x, y, s, col, a) => { g.save(); g.translate(x, y); g.rotate(a); g.scale(s, s); g.fillStyle = col; g.fill(LEAF); g.restore(); };
   const warmEdge = L.tx + (L.net[0] - L.tx) * .9;
+  if (L.oak) {
+    // soft foliage glow first, so the crown reads as one warm mass
+    for (const tp of tips) {
+      if (tp.x > warmEdge + W * .02 || R() < .45) continue;
+      const rr = 14 + R() * 18, fg = g.createRadialGradient(tp.x, tp.y, 0, tp.x, tp.y, rr);
+      fg.addColorStop(0, "rgba(214,104,38,.30)"); fg.addColorStop(1, "rgba(214,104,38,0)");
+      g.fillStyle = fg; g.beginPath(); g.arc(tp.x, tp.y, rr, 0, 7); g.fill();
+    }
+    for (const tp of tips) {
+      const fade = clamp((tp.x - warmEdge) / (W * .08), 0, 1);     // leaves thin out towards the network
+      const n = R() < fade * .85 ? (R() < .5 ? 1 : 0) : 4 + (R() * 6 | 0);
+      for (let k = 0; k < n; k++) {
+        const deep = tp.y > L.gy - L.trunk * 2.1;
+        const col = deep ? ["#8f3415", "#a8461a", "#c9601c", "#b8401a"][(R() * 4) | 0] : AUTUMN[(R() * AUTUMN.length) | 0];
+        g.globalAlpha = .72 + R() * .28;
+        leafAt(tp.x + (R() - .5) * 26, tp.y + (R() - .5) * 22, .42 + R() * .5, col, R() * 6.28);
+      }
+    }
+  } else
   for (const tp of tips) {
     const warm = tp.x < warmEdge;
     const n = warm ? (R() < .15 ? 0 : 3 + (R() * 5 | 0)) : (R() < .3 ? 1 + (R() * 2 | 0) : 0);
