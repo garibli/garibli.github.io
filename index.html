@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fuad Garibli · AI &amp; Data Scientist</title>
+<meta name="description" content="Fuad Garibli. PhD researcher at the University of Glasgow working on federated learning, differential privacy and AI privacy.">
+<meta property="og:title" content="Fuad Garibli · AI & Data Scientist">
+<meta property="og:description" content="Where nature meets machine learning. Federated learning, differential privacy, NLP and ML systems.">
+<meta property="og:image" content="assets/cover.jpg">
+<meta name="theme-color" content="#070d1a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-12 -12 24 24'%3E%3Cpath d='M0,-10 C3,-8 4,-6 3.5,-4 C6,-5 7,-2 5,0 C7.5,0 7,3 4,3.5 C5,6 2,7 0.6,6 L0.5,10 L-0.5,10 L-0.6,6 C-2,7 -5,6 -4,3.5 C-7,3 -7.5,0 -5,0 C-7,-2 -6,-5 -3.5,-4 C-4,-6 -3,-8 0,-10 Z' fill='%23e8772e'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy0:#070d1a; --navy1:#0b1628; --navy2:#10203a; --line:rgba(255,255,255,.08);
+  --cyan:#3ddcff; --cyan2:#8ff0ff; --gold:#ffc861; --amber:#f7a541; --orange:#e8772e; --rust:#d2542a;
+  --ink:#f6efe4; --ink2:#b9c3d3; --muted:#7a879c;
+  --display:'Space Grotesk','Segoe UI',system-ui,sans-serif; --body:'Inter','Segoe UI',system-ui,sans-serif;
+  --r:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{background:var(--navy0);color:var(--ink);font-family:var(--body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+   radial-gradient(900px 600px at 0% 0%,rgba(232,119,46,.10),transparent 60%),
+   radial-gradient(900px 700px at 100% 100%,rgba(61,220,255,.08),transparent 60%),
+   linear-gradient(var(--line) 1px,transparent 1px) 0 0/48px 48px,
+   linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/48px 48px;
+  mask-image:linear-gradient(#000,rgba(0,0,0,.35));opacity:.55}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+::selection{background:var(--orange);color:var(--navy0)}
+#ambient{position:fixed;inset:0;z-index:-1;pointer-events:none}
+
+/* ---------- nav ---------- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;gap:28px;padding:14px clamp(18px,4vw,48px);
+  transition:background .3s,backdrop-filter .3s,border-color .3s;border-bottom:1px solid transparent}
+.nav.solid{background:rgba(7,13,26,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;letter-spacing:.2px}
+.brand svg{width:22px;height:22px;transition:transform .6s}
+.brand:hover svg{transform:rotate(-25deg) scale(1.1)}
+.nav ul{display:flex;gap:22px;list-style:none;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+.nav ul::-webkit-scrollbar{display:none}
+.nav ul a{font-size:14px;color:var(--ink2);position:relative;padding:4px 0;white-space:nowrap;transition:color .2s}
+.nav ul a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--orange),var(--cyan));transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.nav ul a:hover,.nav ul a.on{color:var(--ink)}
+.nav ul a:hover::after,.nav ul a.on::after{transform:scaleX(1)}
+.progress{position:fixed;top:0;left:0;height:2px;z-index:60;width:100%;transform-origin:left;transform:scaleX(0);background:linear-gradient(90deg,var(--orange),var(--gold),var(--cyan))}
+
+/* ---------- hero ---------- */
+.hero{position:relative;height:100vh;min-height:620px;overflow:hidden}
+#scene{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:crosshair}
+.hero-text{position:absolute;right:clamp(20px,6vw,90px);bottom:clamp(40px,10vh,110px);max-width:560px;pointer-events:none}
+.hero-text > *{pointer-events:auto}
+.pill{display:inline-flex;align-items:center;gap:9px;padding:6px 14px;border-radius:99px;font-size:13px;font-weight:600;color:var(--gold);
+  border:1px solid rgba(255,200,97,.45);background:rgba(7,13,26,.55);backdrop-filter:blur(6px)}
+.pill i{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold);animation:blink 2s infinite}
+@keyframes blink{50%{opacity:.25}}
+.hero h1{font-family:var(--display);font-size:clamp(46px,7vw,92px);line-height:1;margin:18px 0 10px;letter-spacing:-2px;
+  text-shadow:0 4px 40px rgba(7,13,26,.8)}
+.role{font-family:var(--display);font-size:clamp(20px,2.4vw,28px);font-weight:600;min-height:1.4em;
+  background:linear-gradient(90deg,var(--gold),var(--orange) 45%,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.role::after{content:"";display:inline-block;width:3px;height:.95em;margin-left:4px;vertical-align:-2px;background:var(--cyan);animation:blink 1s steps(1) infinite}
+.hero p.sub{color:var(--ink2);margin-top:10px;font-size:16px}
+.cta{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:12px 22px;border-radius:99px;font-weight:600;font-size:15px;transition:transform .2s,box-shadow .3s,background .3s;position:relative}
+.btn.primary{background:linear-gradient(90deg,var(--orange),var(--amber));color:#1b0f08;box-shadow:0 8px 30px rgba(232,119,46,.35)}
+.btn.primary:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(232,119,46,.5)}
+.btn.ghost{border:1px solid rgba(61,220,255,.55);color:var(--cyan2);background:rgba(7,13,26,.5);backdrop-filter:blur(6px)}
+.btn.ghost:hover{background:rgba(61,220,255,.12);transform:translateY(-2px)}
+.hint{margin-top:18px;font-size:12.5px;color:var(--muted);letter-spacing:.4px}
+.hint b{color:var(--cyan2);font-weight:600}
+.scroll-cue{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);width:24px;height:38px;border:2px solid rgba(255,255,255,.25);border-radius:14px}
+.scroll-cue::after{content:"";position:absolute;left:50%;top:7px;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:var(--gold);animation:cue 1.8s infinite}
+@keyframes cue{0%{opacity:0;transform:translateY(0)}30%{opacity:1}100%{opacity:0;transform:translateY(12px)}}
+
+/* ---------- sections ---------- */
+section.block{position:relative;padding:96px clamp(18px,5vw,64px);max-width:1240px;margin:0 auto}
+.kicker{display:flex;align-items:center;gap:12px;font-size:12.5px;font-weight:700;letter-spacing:3px;color:var(--gold);text-transform:uppercase}
+.kicker::before{content:"";width:36px;height:2px;background:linear-gradient(90deg,var(--orange),var(--cyan));border-radius:2px}
+h2{font-family:var(--display);font-size:clamp(32px,4.4vw,52px);line-height:1.08;letter-spacing:-1px;margin:14px 0 18px}
+h2 em{font-style:normal;background:linear-gradient(90deg,var(--gold),var(--orange) 40%,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--ink2);font-size:17.5px;max-width:720px}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- about ---------- */
+.about{display:grid;grid-template-columns:minmax(260px,380px) 1fr;gap:clamp(30px,6vw,80px);align-items:center}
+.avatar{position:relative;aspect-ratio:1;width:100%}
+.avatar img{position:absolute;inset:13%;width:74%;height:74%;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px rgba(255,200,97,.35),0 30px 80px rgba(232,119,46,.25),0 0 120px rgba(61,220,255,.15)}
+.avatar svg{position:absolute;inset:0;width:100%;height:100%}
+.spin{animation:spin 40s linear infinite;transform-origin:50% 50%}
+.spin.rev{animation-duration:26s;animation-direction:reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:34px}
+.stat{padding:18px 16px;border-radius:14px;background:linear-gradient(180deg,rgba(16,32,58,.75),rgba(7,13,26,.6));border:1px solid var(--line);transition:border-color .3s,transform .3s}
+.stat:hover{border-color:rgba(255,200,97,.4);transform:translateY(-3px)}
+.stat b{display:block;font-family:var(--display);font-size:34px;line-height:1.1;color:var(--ink)}
+.stat span{font-size:13px;color:var(--muted)}
+.facts{margin-top:22px;display:grid;gap:10px}
+.facts li{list-style:none;display:flex;gap:12px;align-items:flex-start;color:var(--ink2)}
+.facts svg{flex:none;width:16px;height:16px;margin-top:5px}
+
+/* ---------- projects ---------- */
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin:28px 0 30px}
+.filters button{font:600 13.5px var(--body);color:var(--ink2);background:rgba(16,32,58,.6);border:1px solid var(--line);padding:9px 16px;border-radius:99px;cursor:pointer;transition:all .25s}
+.filters button:hover{color:var(--ink);border-color:rgba(255,255,255,.25)}
+.filters button.on{color:#1b0f08;background:linear-gradient(90deg,var(--gold),var(--amber));border-color:transparent}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;perspective:1200px}
+.card{--c:var(--cyan);--mx:50%;--my:0%;position:relative;border-radius:var(--r);padding:24px 24px 22px;min-height:290px;display:flex;flex-direction:column;
+  background:radial-gradient(420px circle at var(--mx) var(--my),color-mix(in srgb,var(--c) 16%,transparent),transparent 55%),linear-gradient(180deg,var(--navy2),var(--navy0));
+  border:1px solid color-mix(in srgb,var(--c) 30%,transparent);transform-style:preserve-3d;transition:transform .25s ease-out,border-color .3s,box-shadow .3s,opacity .4s;overflow:hidden}
+.card:hover{border-color:color-mix(in srgb,var(--c) 70%,transparent);box-shadow:0 24px 60px rgba(0,0,0,.45),0 0 40px color-mix(in srgb,var(--c) 18%,transparent)}
+.card.wide{grid-column:span 2}
+.card.hide{display:none}
+.card .deco{position:absolute;right:-6px;top:-6px;width:150px;opacity:.28;pointer-events:none}
+.card .bigleaf{position:absolute;right:-30px;bottom:-40px;width:170px;opacity:.06;transform:rotate(-25deg);transition:transform 1s,opacity .4s;pointer-events:none}
+.card:hover .bigleaf{transform:rotate(-5deg) scale(1.08);opacity:.12}
+.tag{display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;letter-spacing:1.6px;color:var(--c);text-transform:uppercase}
+.tag svg{width:14px;height:14px;transition:transform .6s}
+.card:hover .tag svg{transform:rotate(340deg)}
+.card h3{font-family:var(--display);font-size:25px;margin:12px 0 8px;letter-spacing:-.3px}
+.card p{color:var(--ink2);font-size:14.5px}
+.card .row{display:flex;gap:16px;align-items:flex-start;justify-content:space-between;margin:12px 0 10px}
+.card .row h3{margin:6px 0 0}
+.foot{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-top:auto;padding-top:20px}
+.foot .chips{padding-top:0;margin-top:0}
+.kpi{flex:none;min-width:104px;max-width:130px;text-align:center;padding:10px 10px;border-radius:14px;background:rgba(7,13,26,.55);border:1px solid color-mix(in srgb,var(--c) 35%,transparent)}
+.kpi b{display:block;font-family:var(--display);font-size:30px;line-height:1.1}
+.kpi span{font-size:11.5px;color:var(--muted);line-height:1.3;display:block}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto;padding-top:20px}
+.chip{font-size:12px;font-weight:600;color:var(--ink2);padding:4px 11px;border-radius:99px;background:color-mix(in srgb,var(--c) 10%,transparent);border:1px solid color-mix(in srgb,var(--c) 40%,transparent)}
+.card .go{flex:none;font-size:13px;font-weight:600;color:var(--c);display:flex;gap:6px;align-items:center;white-space:nowrap;transition:gap .25s}
+.card:hover .go{gap:10px}
+.card a.cover{position:absolute;inset:0;z-index:2}
+
+/* ---------- research ---------- */
+.lab{display:grid;grid-template-columns:1fr 1.1fr;gap:26px;margin-top:36px}
+.panel{border-radius:var(--r);padding:28px;background:linear-gradient(160deg,rgba(28,19,15,.85),rgba(11,22,40,.85) 50%,rgba(7,13,26,.9));border:1px solid rgba(255,200,97,.18)}
+.f1{display:flex;align-items:baseline;gap:14px;margin:6px 0 4px}
+.f1 b{font-family:var(--display);font-size:clamp(56px,7vw,84px);line-height:1;letter-spacing:-2px}
+.f1 .delta{font-size:15px;font-weight:600;padding:3px 10px;border-radius:99px}
+.small{font-size:12.5px;color:var(--muted)}
+.insight{min-height:76px;color:var(--ink2);font-size:16px;margin:12px 0 22px;transition:opacity .3s}
+.slider{position:relative;margin:26px 6px 8px}
+.slider input{width:100%;-webkit-appearance:none;appearance:none;height:6px;border-radius:6px;outline:none;cursor:pointer;
+  background:linear-gradient(90deg,var(--gold),var(--orange) 35%,var(--cyan))}
+.slider input::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:var(--navy0);border:3px solid var(--ink);box-shadow:0 0 0 6px rgba(61,220,255,.18),0 0 20px rgba(61,220,255,.5)}
+.slider input::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--navy0);border:3px solid var(--ink)}
+.ticks{display:flex;justify-content:space-between;margin-top:12px}
+.ticks button{font:600 12.5px var(--body);color:var(--muted);background:none;border:0;cursor:pointer;width:20%;text-align:center;transition:color .2s}
+.ticks button:first-child{text-align:left}.ticks button:last-child{text-align:right}
+.ticks button.on{color:var(--ink)}
+.shield{display:flex;align-items:center;gap:10px;margin-top:20px;font-size:13px;color:var(--ink2)}
+.meter{flex:1;height:8px;border-radius:8px;background:rgba(255,255,255,.06);overflow:hidden}
+.meter i{display:block;height:100%;width:0;border-radius:8px;background:linear-gradient(90deg,var(--cyan2),var(--cyan));transition:width .5s cubic-bezier(.2,.7,.2,1)}
+.viz{position:relative}
+#noise{width:100%;height:330px;display:block;border-radius:12px;background:rgba(7,13,26,.6)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--ink2);margin-top:12px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.bars{display:grid;gap:9px;margin-top:22px}
+.bar{display:grid;grid-template-columns:96px 1fr 50px;align-items:center;gap:12px;font-size:13.5px;color:var(--ink2);cursor:pointer}
+.bar .track{height:22px;border-radius:5px;background:rgba(255,255,255,.05);overflow:hidden}
+.bar .fill{height:100%;width:0;border-radius:5px;background:var(--cyan);opacity:.45;transition:width 1.2s cubic-bezier(.2,.7,.2,1),opacity .3s}
+.bar.on .fill{opacity:1}
+.bar b{color:var(--ink);font-weight:600;text-align:right}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+.tile{padding:20px;border-radius:14px;background:rgba(16,32,58,.55);border:1px solid var(--line)}
+.tile b{display:block;font-family:var(--display);font-size:26px;color:var(--gold);line-height:1.2}
+.tile span{color:var(--ink2);font-size:14px}
+
+/* ---------- journey ---------- */
+.timeline{position:relative;margin-top:50px}
+.track-line{position:absolute;left:50%;top:0;bottom:0;width:3px;margin-left:-1.5px;background:rgba(255,255,255,.07);border-radius:3px}
+.track-line i{position:absolute;left:0;top:0;width:100%;height:0;border-radius:3px;background:linear-gradient(180deg,#6b4426,var(--amber) 35%,var(--orange) 55%,var(--cyan));box-shadow:0 0 14px rgba(61,220,255,.35)}
+.track-line i::after{content:"";position:absolute;left:50%;bottom:-7px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:var(--cyan2);box-shadow:0 0 18px var(--cyan)}
+.t-item{position:relative;width:50%;padding:0 46px 46px}
+.t-item:nth-child(odd){margin-left:0;text-align:right}
+.t-item:nth-child(even){margin-left:50%}
+@media (min-width:721px){.t-item + .t-item{margin-top:-84px}}
+.t-item .dot{position:absolute;top:6px;width:18px;height:18px;border-radius:50%;background:var(--navy0);border:3px solid var(--k);box-shadow:0 0 0 5px var(--navy0),0 0 16px var(--k)}
+.t-item:nth-child(odd) .dot{right:-9px}
+.t-item:nth-child(even) .dot{left:-9px}
+.t-card{display:inline-block;text-align:left;max-width:440px;padding:18px 20px;border-radius:14px;background:linear-gradient(180deg,rgba(16,32,58,.75),rgba(7,13,26,.7));border:1px solid var(--line);transition:border-color .3s,transform .3s}
+.t-card:hover{border-color:color-mix(in srgb,var(--k) 55%,transparent);transform:translateY(-3px)}
+.t-card .yr{font-family:var(--display);font-weight:700;color:var(--k);font-size:15px}
+.t-card h4{font-family:var(--display);font-size:19px;margin:2px 0}
+.t-card .org{font-size:13.5px;color:var(--muted)}
+.t-card p{font-size:14.5px;color:var(--ink2);margin-top:8px}
+
+/* ---------- toolkit ---------- */
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px;margin-top:36px}
+.tool{--k:var(--cyan);padding:22px;border-radius:var(--r);background:linear-gradient(180deg,rgba(16,32,58,.7),rgba(7,13,26,.6));border:1px solid var(--line)}
+.tool h4{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:17px;margin-bottom:14px}
+.tool h4 svg{width:16px;height:16px}
+.tool .chips{padding-top:0}
+.tool .chip{--c:var(--k);font-size:13px;padding:6px 13px;transition:all .25s;cursor:default}
+.tool .chip:hover{color:var(--navy0);background:var(--k);box-shadow:0 0 18px color-mix(in srgb,var(--k) 60%,transparent)}
+
+/* ---------- contact ---------- */
+.contact{text-align:center;padding-bottom:80px}
+.contact h2{font-size:clamp(36px,5.5vw,68px)}
+.contact .lead{margin:0 auto}
+.contact .cta{justify-content:center;margin-top:34px}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:30px 20px 40px;border-top:1px solid var(--line)}
+footer svg{width:14px;height:14px;display:inline-block;vertical-align:-2px;margin:0 4px}
+
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .lab{grid-template-columns:1fr}
+  .about{grid-template-columns:1fr}
+  .avatar{max-width:300px;margin:0 auto}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:720px){
+  .nav ul{gap:16px}
+  .nav .brand span{display:none}
+  .grid{grid-template-columns:1fr}
+  .card.wide{grid-column:auto}
+  .hero-text{left:20px;right:20px;bottom:64px}
+  .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:52%;background:linear-gradient(rgba(7,13,26,0),rgba(7,13,26,.85) 35%,var(--navy0));pointer-events:none}
+  .hero-text{z-index:2}
+  .hero h1{margin:14px 0 6px}
+  .hero p.sub{font-size:15px}
+  .btn{padding:11px 18px;font-size:14px}
+  .scroll-cue{display:none}
+  .nav ul{-webkit-mask-image:linear-gradient(90deg,#000 80%,transparent);mask-image:linear-gradient(90deg,#000 80%,transparent);padding-right:24px}
+  .nav ul a{font-size:13px}
+  .hint{display:none}
+  .tiles{grid-template-columns:1fr}
+  .track-line{left:14px}
+  .t-item,.t-item:nth-child(even){width:100%;margin-left:0;text-align:left;padding:0 0 34px 44px}
+  .t-item:nth-child(odd) .dot,.t-item:nth-child(even) .dot{left:5px;right:auto}
+  section.block{padding-top:90px;padding-bottom:90px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<canvas id="ambient" aria-hidden="true"></canvas>
+<div class="progress" id="progress"></div>
+
+<nav class="nav" id="nav">
+  <a class="brand" href="#home" aria-label="Home">
+    <svg viewBox="-12 -12 24 24"><defs><linearGradient id="lg" x1="0" x2="1"><stop offset=".5" stop-color="#3ddcff"/><stop offset=".5" stop-color="#e8772e"/></linearGradient></defs><path fill="url(#lg)" d="M0,-10 C3,-8 4,-6 3.5,-4 C6,-5 7,-2 5,0 C7.5,0 7,3 4,3.5 C5,6 2,7 0.6,6 L0.5,10 L-0.5,10 L-0.6,6 C-2,7 -5,6 -4,3.5 C-7,3 -7.5,0 -5,0 C-7,-2 -6,-5 -3.5,-4 C-4,-6 -3,-8 0,-10 Z"/></svg>
+    <span>Fuad Garibli</span>
+  </a>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#journey">Journey</a></li>
+    <li><a href="#toolkit">Toolkit</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="home">
+  <canvas id="scene" aria-label="An autumn tree whose branches grow into a glowing neural network"></canvas>
+  <div class="hero-text">
+    <span class="pill"><i></i>PhD Researcher · University of Glasgow</span>
+    <h1>Fuad Garibli</h1>
+    <div class="role" id="role" aria-live="polite"></div>
+    <p class="sub">I build AI systems that learn from data without taking it away from the people it belongs to.</p>
+    <div class="cta">
+      <a class="btn primary" href="#projects">See my work
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn ghost" href="#research">Explore the research</a>
+    </div>
+    <div class="hint"><b>Move</b> through the network &nbsp;·&nbsp; <b>Click</b> to send a signal</div>
+  </div>
+  <a class="scroll-cue" href="#about" aria-label="Scroll down"></a>
+</header>
+
+<!-- ================= ABOUT ================= -->
+<section class="block" id="about">
+  <div class="about">
+    <div class="avatar reveal">
+      <svg viewBox="0 0 400 400" aria-hidden="true">
+        <defs><linearGradient id="ring" x1="0" x2="1"><stop offset="0" stop-color="#e8772e"/><stop offset=".5" stop-color="#ffc861"/><stop offset="1" stop-color="#3ddcff"/></linearGradient></defs>
+        <g class="spin"><circle cx="200" cy="200" r="186" fill="none" stroke="url(#ring)" stroke-width="2" stroke-dasharray="3 9 40 9"/>
+          <circle cx="200" cy="14" r="6" fill="#ffc861"/><circle cx="386" cy="200" r="4" fill="#3ddcff"/></g>
+        <g class="spin rev"><circle cx="200" cy="200" r="168" fill="none" stroke="#3ddcff" stroke-opacity=".35" stroke-width="1" stroke-dasharray="1 7"/>
+          <path transform="translate(32 200) rotate(-70) scale(1.1)" fill="#e8772e" d="M0,-10 C3,-8 4,-6 3.5,-4 C6,-5 7,-2 5,0 C7.5,0 7,3 4,3.5 C5,6 2,7 0.6,6 L0.5,10 L-0.5,10 L-0.6,6 C-2,7 -5,6 -4,3.5 C-7,3 -7.5,0 -5,0 C-7,-2 -6,-5 -3.5,-4 C-4,-6 -3,-8 0,-10 Z"/></g>
+      </svg>
+      <img src="assets/avatar.png" alt="A leaf that is half autumn and half circuit board">
+    </div>
+    <div>
+      <div class="kicker reveal">Who I am</div>
+      <h2 class="reveal">Where <em>nature</em> meets <em>machine learning</em></h2>
+      <p class="lead reveal">I am an AI and data scientist who builds complete systems, from data pipelines to trained models to live products. I shipped a production mobile app on my own, built ML pipelines on real client data, and now research privacy and governance in federated learning as a PhD student at the University of Glasgow.</p>
+      <ul class="facts reveal">
+        <li><svg viewBox="-12 -12 24 24"><path fill="#e8772e" d="M0,-10 C3,-8 4,-6 3.5,-4 C6,-5 7,-2 5,0 C7.5,0 7,3 4,3.5 C5,6 2,7 0.6,6 L0.5,10 L-0.5,10 L-0.6,6 C-2,7 -5,6 -4,3.5 C-7,3 -7.5,0 -5,0 C-7,-2 -6,-5 -3.5,-4 C-4,-6 -3,-8 0,-10 Z"/></svg>MSc Data Science, University of Glasgow. BSc Computer Engineering, Sakarya University, with an Erasmus year in Spain.</li>
+        <li><svg viewBox="-12 -12 24 24"><path fill="#ffc861" d="M0,-10 C3,-8 4,-6 3.5,-4 C6,-5 7,-2 5,0 C7.5,0 7,3 4,3.5 C5,6 2,7 0.6,6 L0.5,10 L-0.5,10 L-0.6,6 C-2,7 -5,6 -4,3.5 C-7,3 -7.5,0 -5,0 C-7,-2 -6,-5 -3.5,-4 C-4,-6 -3,-8 0,-10 Z"/></svg>Interested in applying AI to banking and finance.</li>
+        <li><svg viewBox="-12 -12 24 24"><path fill="#3ddcff" d="M0,-10 C3,-8 4,-6 3.5,-4 C6,-5 7,-2 5,0 C7.5,0 7,3 4,3.5 C5,6 2,7 0.6,6 L0.5,10 L-0.5,10 L-0.6,6 C-2,7 -5,6 -4,3.5 C-7,3 -7.5,0 -5,0 C-7,-2 -6,-5 -3.5,-4 C-4,-6 -3,-8 0,-10 Z"/></svg>Fluent in Azerbaijani, Turkish, Russian, English and French.</li>
+      </ul>
+      <div class="stats reveal">
+        <div class="stat"><b data-count="141" data-suffix="×">0</b><span>less data per training round</span></div>
+        <div class="stat"><b data-count="442">0</b><span>stocks forecast by one model</span></div>
+        <div class="stat"><b data-count="4">0</b><span>clients served by one API</span></div>
+        <div class="stat"><b data-count="5">0</b><span>languages spoken</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROJECTS ================= -->
+<section class="block" id="projects">
+  <div class="kicker reveal">What I build</div>
+  <h2 class="reveal">Featured <em>projects</em></h2>
+  <p class="lead reveal">From privacy preserving research to streaming pipelines and a live mobile app.</p>
+  <div class="filters reveal" id="filters"></div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<!-- ================= RESEARCH ================= -->
+<section class="block" id="research">
+  <div class="kicker reveal">Research highlight · MSc thesis</div>
+  <h2 class="reveal">What does <em>privacy</em> cost?</h2>
+  <p class="lead reveal">FedClinical is a federated learning framework I built from scratch for mental health text classification. Five clients hold deliberately uneven data. Slide through the privacy levels to see what each step costs.</p>
+  <div class="lab">
+    <div class="panel reveal">
+      <div class="small">Macro F1 score</div>
+      <div class="f1"><b id="f1">0.878</b><span class="delta" id="delta"></span></div>
+      <div class="small" id="stepname">Centralised training</div>
+      <div class="slider">
+        <input type="range" id="eps" min="0" max="4" step="1" value="0" aria-label="Privacy level">
+        <div class="ticks" id="ticks"></div>
+      </div>
+      <p class="insight" id="insight"></p>
+      <div class="shield"><span>Privacy</span><div class="meter"><i id="meter"></i></div></div>
+      <div class="bars" id="bars"></div>
+      <p class="small" style="margin-top:14px">ε is the privacy budget. Smaller ε means stronger privacy.</p>
+    </div>
+    <div class="panel viz reveal">
+      <div class="small" style="margin-bottom:10px">How noise blurs the classes</div>
+      <canvas id="noise"></canvas>
+      <div class="legend"><span><i style="background:#ffc861"></i>Anxiety posts</span><span><i style="background:#3ddcff"></i>Depression posts</span><span><i style="background:transparent;border:2px solid #ff6b4a"></i>Wrongly labelled</span></div>
+      <p class="small" style="margin-top:8px">An illustration of the effect, not the real data.</p>
+    </div>
+  </div>
+  <div class="tiles">
+    <div class="tile reveal"><b>502 MB → 3.55 MB</b><span>sent per round, by training only LoRA adapters and a classification head</span></div>
+    <div class="tile reveal"><b>0.71%</b><span>of the model is trained, which makes federation practical</span></div>
+    <div class="tile reveal"><b>496 of 992</b><span>test texts leaked into training in the source data. Found and fixed before reporting any result</span></div>
+  </div>
+</section>
+
+<!-- ================= JOURNEY ================= -->
+<section class="block" id="journey">
+  <div class="kicker reveal">From roots to circuits</div>
+  <h2 class="reveal">My <em>journey</em></h2>
+  <div class="timeline" id="timeline"><div class="track-line"><i id="trackfill"></i></div></div>
+</section>
+
+<!-- ================= TOOLKIT ================= -->
+<section class="block" id="toolkit">
+  <div class="kicker reveal">What I use</div>
+  <h2 class="reveal">My <em>toolkit</em></h2>
+  <div class="tools" id="tools"></div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="block contact" id="contact">
+  <div class="kicker reveal" style="justify-content:center">Say hello</div>
+  <h2 class="reveal">Let's grow something <em>together</em></h2>
+  <p class="lead reveal">I am always happy to talk about federated learning, privacy in AI and AI for finance.</p>
+  <div class="cta reveal">
+    <a class="btn primary" href="mailto:gariblifpro@gmail.com">Email me</a>
+    <a class="btn ghost" href="https://www.linkedin.com/in/fuad-g-936354272/" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="btn ghost" href="https://github.com/garibli" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</section>
+<footer>Grown in Glasgow <svg viewBox="-12 -12 24 24"><path fill="#e8772e" d="M0,-10 C3,-8 4,-6 3.5,-4 C6,-5 7,-2 5,0 C7.5,0 7,3 4,3.5 C5,6 2,7 0.6,6 L0.5,10 L-0.5,10 L-0.6,6 C-2,7 -5,6 -4,3.5 C-7,3 -7.5,0 -5,0 C-7,-2 -6,-5 -3.5,-4 C-4,-6 -3,-8 0,-10 Z"/></svg> © <span id="yr"></span> Fuad Garibli</footer>
+
+<script>
+(() => {
+"use strict";
+const LEAF_D = "M0,-10 C3,-8 4,-6 3.5,-4 C6,-5 7,-2 5,0 C7.5,0 7,3 4,3.5 C5,6 2,7 0.6,6 L0.5,10 L-0.5,10 L-0.6,6 C-2,7 -5,6 -4,3.5 C-7,3 -7.5,0 -5,0 C-7,-2 -6,-5 -3.5,-4 C-4,-6 -3,-8 0,-10 Z";
+const LEAF = new Path2D(LEAF_D);
+const C = { cyan:"#3ddcff", cyan2:"#8ff0ff", gold:"#ffc861", amber:"#f7a541", orange:"#e8772e", rust:"#d2542a", navy:"#070d1a" };
+const AUTUMN = ["#e8772e", "#f7a541", "#ffc861", "#d2542a", "#c9601c", "#b8401a"];
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const TOUCH = matchMedia("(pointer: coarse)").matches;
+const leafSvg = c => `<svg viewBox="-12 -12 24 24"><path fill="${c}" d="${LEAF_D}"/></svg>`;
+document.getElementById("yr").textContent = new Date().getFullYear();
+
+function rngFrom(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const lerp = (a, b, t) => a + (b - a) * t;
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+function hexRgb(h) { const n = parseInt(h.slice(1), 16); return [n >> 16, n >> 8 & 255, n & 255]; }
+function mix(h1, h2, t) { const a = hexRgb(h1), b = hexRgb(h2); return `rgb(${a.map((v, i) => Math.round(lerp(v, b[i], t))).join(",")})`; }
+
+/* glow sprites, tinted once and reused */
+function sprite(color, size = 64) {
+  const c = document.createElement("canvas"); c.width = c.height = size;
+  const g = c.getContext("2d"), r = size / 2, gr = g.createRadialGradient(r, r, 0, r, r, r);
+  const [R, G, B] = hexRgb(color);
+  gr.addColorStop(0, `rgba(${R},${G},${B},1)`); gr.addColorStop(.18, `rgba(${R},${G},${B},.55)`);
+  gr.addColorStop(.5, `rgba(${R},${G},${B},.12)`); gr.addColorStop(1, `rgba(${R},${G},${B},0)`);
+  g.fillStyle = gr; g.fillRect(0, 0, size, size); return c;
+}
+const SPR = { cyan: sprite(C.cyan), gold: sprite(C.gold), white: sprite("#ffffff"), orange: sprite(C.orange) };
+
+/* =====================================================================
+   HERO SCENE: an autumn tree whose right side turns into a neural network
+   ===================================================================== */
+const scene = document.getElementById("scene");
+const ctx = scene.getContext("2d");
+let W, H, DPR, L, bg, nodes, edges, adj, tips, roots, spines, pulses, leaves, waves, t0 = performance.now();
+const mouse = { x: -9999, y: -9999, vx: 0, on: false };
+let wind = 0, heroVisible = true;
+
+function layout() {
+  const portrait = W / H < 0.95;
+  return portrait
+    ? { tx: W * .3, gy: H * .43, trunk: H * .08, maxD: 8, w0: Math.max(9, H * .018), top: H * .11, net: [W * .4, W * .98, H * .08, H * .34], hill: W * 1.1 }
+    : { tx: W * .25, gy: H * .84, trunk: H * .15, maxD: 10, w0: Math.max(14, H * .03), top: H * .1, net: [W * .36, W * .97, H * .1, H * .5], hill: W * .7 };
+}
+
+function build() {
+  DPR = Math.min(2, devicePixelRatio || 1);
+  W = scene.clientWidth; H = scene.clientHeight;
+  scene.width = W * DPR; scene.height = H * DPR;
+  L = layout();
+  const R = rngFrom(20261110);
+  bg = document.createElement("canvas"); bg.width = W * DPR; bg.height = H * DPR;
+  const g = bg.getContext("2d"); g.scale(DPR, DPR);
+
+  /* sky: warm sunset behind the tree, deep navy towards the network */
+  let gr = g.createLinearGradient(0, 0, W, 0);
+  gr.addColorStop(0, "#2b1a12"); gr.addColorStop(.35, "#1c1418"); gr.addColorStop(.62, "#0b1628"); gr.addColorStop(1, "#070d1a");
+  g.fillStyle = gr; g.fillRect(0, 0, W, H);
+  gr = g.createRadialGradient(L.tx - W * .05, L.gy - H * .12, 0, L.tx - W * .05, L.gy - H * .12, Math.max(W, H) * .55);
+  gr.addColorStop(0, "rgba(255,196,110,.75)"); gr.addColorStop(.18, "rgba(247,165,65,.42)"); gr.addColorStop(.45, "rgba(210,84,42,.16)"); gr.addColorStop(1, "rgba(210,84,42,0)");
+  g.fillStyle = gr; g.fillRect(0, 0, W, H);
+  gr = g.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, "rgba(7,13,26,.55)"); gr.addColorStop(.5, "rgba(7,13,26,0)");
+  g.fillStyle = gr; g.fillRect(0, 0, W, H);
+  // sun
+  const sx = L.tx - W * .07, sy = L.gy - H * .09;
+  gr = g.createRadialGradient(sx, sy, 0, sx, sy, H * .09);
+  gr.addColorStop(0, "rgba(255,240,200,.95)"); gr.addColorStop(.25, "rgba(255,210,130,.6)"); gr.addColorStop(1, "rgba(255,200,97,0)");
+  g.fillStyle = gr; g.beginPath(); g.arc(sx, sy, H * .09, 0, 7); g.fill();
+  // stars on the network side
+  for (let i = 0; i < W * H / 3500; i++) {
+    const x = lerp(W * .38, W, Math.pow(R(), .7)), y = R() * H * .95;
+    g.fillStyle = `rgba(${R() < .8 ? "143,240,255" : "255,200,97"},${R() * .5 + .1})`;
+    g.fillRect(x, y, R() < .9 ? 1 : 2, R() < .9 ? 1 : 2);
+  }
+  // faint hud grid on the far right
+  g.strokeStyle = "rgba(61,220,255,.05)"; g.lineWidth = 1;
+  for (let x = W * .62; x < W; x += 46) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, H); g.stroke(); }
+  for (let y = 0; y < H; y += 46) { g.beginPath(); g.moveTo(W * .62, y); g.lineTo(W, y); g.stroke(); }
+  // distant hills
+  { const hg = g.createLinearGradient(0, 0, L.hill * .8, 0); hg.addColorStop(0, "rgba(40,24,20,.85)"); hg.addColorStop(.75, "rgba(40,24,20,.6)"); hg.addColorStop(1, "rgba(40,24,20,0)"); g.fillStyle = hg; }
+  g.beginPath(); g.moveTo(0, L.gy - H * .05);
+  for (let x = 0; x <= L.hill * .8; x += 20) g.lineTo(x, L.gy - H * .05 - Math.sin(x * .008) * H * .025 - Math.sin(x * .021) * H * .012);
+  g.lineTo(L.hill * .8, L.gy); g.lineTo(0, L.gy); g.fill();
+
+  /* ---- tree ---- */
+  const segs = [];
+  tips = [];
+  function grow(x, y, ang, len, w, d, parent) {
+    const x2 = x + Math.cos(ang) * len, y2 = y + Math.sin(ang) * len;
+    const bend = (R() - .5) * len * .3;
+    const cx = (x + x2) / 2 + Math.cos(ang + Math.PI / 2) * bend, cy = (y + y2) / 2 + Math.sin(ang + Math.PI / 2) * bend;
+    const id = segs.length;
+    segs.push({ x, y, cx, cy, x2, y2, w, d, parent });
+    if (d >= L.maxD || len < 5) { tips.push({ x: x2, y: y2, seg: id }); return; }
+    const n = d < 1 ? 2 : (R() < .32 ? 3 : 2);
+    for (let i = 0; i < n; i++) {
+      const spread = (d < 2 ? .62 : .44) + R() * .34;
+      let a = ang + (i - (n - 1) / 2) * spread * (n === 3 ? 1 : 1.15) + (R() - .5) * .25 + .05;
+      a = clamp(a, -Math.PI * .97, -.06);
+      let f = .72 + R() * .12;
+      if (Math.cos(a) > .25 && d >= 2) f += .07;      // the right side reaches further, towards the network
+      grow(x2, y2, a, len * f, w * .7, d + 1, id);
+    }
+  }
+  grow(L.tx, L.gy + 4, -Math.PI / 2 - .04, L.trunk, L.w0, 0, -1);
+  // fit the crown inside the screen: scale around the trunk base
+  {
+    let minY = Infinity, minX = Infinity;
+    for (const s of segs) { minY = Math.min(minY, s.y2, s.cy); minX = Math.min(minX, s.x2, s.cx); }
+    let k = Math.min(1.25, (L.gy - L.top) / (L.gy - minY), (L.tx - W * .015) / Math.max(1, L.tx - minX));
+    const fx = x => L.tx + (x - L.tx) * k, fy = y => L.gy + (y - L.gy) * k;
+    for (const s of segs) { s.x = fx(s.x); s.y = fy(s.y); s.cx = fx(s.cx); s.cy = fy(s.cy); s.x2 = fx(s.x2); s.y2 = fy(s.y2); s.w *= Math.sqrt(k); }
+    for (const t of tips) { t.x = fx(t.x); t.y = fy(t.y); }
+  }
+
+  // network edges are drawn behind the tree
+  buildNetwork(R);
+  g.lineCap = "round";
+  for (const e of edges) {
+    const a = nodes[e.a], b = nodes[e.b];
+    g.strokeStyle = e.gold ? "rgba(255,200,97,.16)" : "rgba(61,220,255,.17)";
+    g.lineWidth = .8; g.beginPath(); g.moveTo(a.x, a.y); g.lineTo(b.x, b.y); g.stroke();
+  }
+
+  // ground hill
+  gr = g.createLinearGradient(0, L.gy - H * .05, 0, H);
+  gr.addColorStop(0, "#1c120d"); gr.addColorStop(1, "#070d1a");
+  g.fillStyle = gr; g.beginPath(); g.moveTo(0, L.gy + H * .02);
+  g.quadraticCurveTo(L.tx * .55, L.gy - H * .02, L.tx, L.gy - H * .012);
+  g.quadraticCurveTo(L.tx + (L.hill - L.tx) * .55, L.gy - H * .005, L.hill, L.gy + H * .09);
+  g.lineTo(L.hill + 40, H); g.lineTo(0, H); g.fill();
+  // grass glints
+  for (let i = 0; i < 160; i++) {
+    const x = R() * L.hill, y = groundY(x) + 2;
+    g.strokeStyle = `rgba(${R() < .5 ? "247,165,65" : "120,80,40"},${.25 + R() * .3})`; g.lineWidth = 1;
+    g.beginPath(); g.moveTo(x, y); g.lineTo(x + (R() - .5) * 4, y - 3 - R() * 7); g.stroke();
+  }
+
+  /* roots: organic roots plus glowing circuit traces in the soil */
+  roots = [];
+  for (let i = 0; i < 9; i++) {
+    const dir = i % 2 ? 1 : -1, reach = (W * .05 + R() * W * .13) * (dir > 0 ? 1.15 : 1);
+    const x0 = L.tx + dir * L.w0 * .3, y0 = L.gy;
+    const x1 = L.tx + dir * reach, y1 = Math.min(H - 6, L.gy + H * .02 + R() * H * .1);
+    g.strokeStyle = "#3a2414"; g.lineWidth = L.w0 * (.35 - i * .02);
+    g.beginPath(); g.moveTo(x0, y0); g.bezierCurveTo(x0 + dir * reach * .3, y0 + 4, x1 - dir * reach * .3, y1 - 8, x1, y1); g.stroke();
+  }
+  for (let i = 0; i < 18; i++) {
+    const dir = i % 2 ? 1 : -1;
+    let x = L.tx + dir * (L.w0 * .2 + R() * L.w0 * .5), y = L.gy + 2 + R() * 6;
+    const pts = [[x, y]];
+    const steps = 2 + (R() * 3 | 0);
+    for (let s = 0; s < steps; s++) {
+      if (s % 2 === 0) { const dd = H * (.02 + R() * .04); x += dir * dd; y += dd; }
+      else { x += dir * (W * .02 + R() * W * .07); }
+      y = Math.min(y, H - 8); pts.push([x, y]);
+    }
+    const col = x > L.tx ? C.cyan : C.gold;
+    g.shadowColor = col; g.shadowBlur = 8;
+    g.strokeStyle = col; g.globalAlpha = .55; g.lineWidth = 1.4;
+    g.beginPath(); pts.forEach((p, k) => k ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])); g.stroke();
+    g.globalAlpha = .9; g.beginPath(); g.arc(x, y, 3, 0, 7); g.strokeStyle = col; g.stroke();
+    g.globalAlpha = 1; g.shadowBlur = 0;
+    roots.push(polyline(pts.slice().reverse(), col));    // pulses flow towards the trunk
+  }
+
+  /* branches, back to front by depth */
+  const created = segs.slice();           // creation order, used for parent chains
+  segs.sort((a, b) => a.d - b.d);
+  for (const s of segs) {
+    const t = s.d / L.maxD;
+    g.strokeStyle = mix("#24160d", "#6b4426", Math.min(1, t * 1.3));
+    g.lineWidth = Math.max(.7, s.w);
+    g.beginPath(); g.moveTo(s.x, s.y); g.quadraticCurveTo(s.cx, s.cy, s.x2, s.y2); g.stroke();
+    if (s.w > 3) {   // bark highlight on the sunny side
+      g.strokeStyle = "rgba(255,180,110,.13)"; g.lineWidth = s.w * .3;
+      g.beginPath(); g.moveTo(s.x - s.w * .25, s.y); g.quadraticCurveTo(s.cx - s.w * .25, s.cy, s.x2 - s.w * .25, s.y2); g.stroke();
+    }
+  }
+  /* circuit veins on the right half of the tree */
+  g.shadowColor = C.cyan; g.shadowBlur = 10;
+  for (const s of segs) {
+    if (s.d > 4 || s.x2 < L.tx - 2 || (s.d > 1 && s.x2 < s.x)) continue;
+    const off = s.w * .22;
+    g.strokeStyle = s.d < 3 ? "rgba(143,240,255,.9)" : "rgba(61,220,255,.75)";
+    g.lineWidth = Math.max(.8, s.w * .09);
+    g.beginPath(); g.moveTo(s.x + off, s.y); g.quadraticCurveTo(s.cx + off, s.cy, s.x2 + off, s.y2); g.stroke();
+    if (s.d >= 2 && s.d <= 4) { g.fillStyle = s.d % 2 ? C.cyan : C.gold; g.beginPath(); g.arc(s.x2 + off, s.y2, Math.max(1.2, 3.2 - s.d * .3), 0, 7); g.fill(); }
+  }
+  // the chip on the trunk
+  const chipY = L.gy - L.trunk * .55, cs = L.w0 * .55;
+  g.fillStyle = "#0b1628"; g.strokeStyle = C.cyan; g.lineWidth = 1.5;
+  g.fillRect(L.tx + L.w0 * .05 - cs / 2, chipY - cs / 2, cs, cs); g.strokeRect(L.tx + L.w0 * .05 - cs / 2, chipY - cs / 2, cs, cs);
+  g.fillStyle = "rgba(143,240,255,.85)"; g.fillRect(L.tx + L.w0 * .05 - cs / 4, chipY - cs / 4, cs / 2, cs / 2);
+  g.shadowBlur = 0;
+
+  // where the crown meets the network, twigs turn into data links
+  g.lineWidth = .9;
+  for (const tp of tips) {
+    if (tp.x < L.tx + W * .15) continue;
+    const j = nearestNode(tp.x, tp.y), n = nodes[j], d = Math.hypot(n.x - tp.x, n.y - tp.y);
+    if (d > W * .09) continue;
+    const gr2 = g.createLinearGradient(tp.x, tp.y, n.x, n.y);
+    gr2.addColorStop(0, "rgba(247,165,65,.18)"); gr2.addColorStop(1, "rgba(61,220,255,.32)");
+    g.strokeStyle = gr2; g.beginPath(); g.moveTo(tp.x, tp.y); g.lineTo(n.x, n.y); g.stroke();
+    g.fillStyle = "rgba(255,200,97,.8)"; g.beginPath(); g.arc(tp.x, tp.y, 1.4, 0, 7); g.fill();
+  }
+  /* leaves on the warm side, sparse leaves among the nodes */
+  const leafAt = (x, y, s, col, a) => { g.save(); g.translate(x, y); g.rotate(a); g.scale(s, s); g.fillStyle = col; g.fill(LEAF); g.restore(); };
+  const warmEdge = L.tx + (L.net[0] - L.tx) * .9;
+  for (const tp of tips) {
+    const warm = tp.x < warmEdge;
+    const n = warm ? (R() < .15 ? 0 : 3 + (R() * 5 | 0)) : (R() < .3 ? 1 + (R() * 2 | 0) : 0);
+    for (let k = 0; k < n; k++) {
+      const deep = tp.y > L.gy - L.trunk * 1.6;      // lower leaves sit in shade
+      const col = deep ? ["#8f3415", "#a8461a", "#c9601c"][(R() * 3) | 0] : AUTUMN[(R() * AUTUMN.length) | 0];
+      g.globalAlpha = .7 + R() * .3;
+      leafAt(tp.x + (R() - .5) * 24, tp.y + (R() - .5) * 20, .38 + R() * .42, col, R() * 6.28);
+    }
+  }
+  g.globalAlpha = 1;
+  // light from the sun catching the canopy
+  gr = g.createRadialGradient(sx, sy, 0, sx, sy, W * .35);
+  gr.addColorStop(0, "rgba(255,220,150,.18)"); gr.addColorStop(1, "rgba(255,220,150,0)");
+  g.globalCompositeOperation = "lighter"; g.fillStyle = gr; g.fillRect(0, 0, W, H); g.globalCompositeOperation = "source-over";
+
+  /* spines: paths from the trunk base up the glowing veins into the network */
+  spines = buildSpines();
+
+  pulses = []; waves = []; leaves = [];
+  const nLeaves = REDUCED ? 0 : (W < 720 ? 16 : 38);
+  for (let i = 0; i < nLeaves; i++) leaves.push(newLeaf(true));
+
+  function buildSpines() {
+    const list = [];
+    const right = tips.filter(t => t.x > L.tx + W * .06 && t.y < L.gy - L.trunk * .9);
+    for (let k = 0; k < Math.min(7, right.length); k++) {
+      const tp = right[(R() * right.length) | 0];
+      list.push(tp);
+    }
+    return list.map(tp => {
+      const chain = [];
+      let id = tp.seg;
+      while (id >= 0) { const s = created[id]; chain.push([s.x2, s.y2]); id = s.parent; }
+      chain.push([L.tx, L.gy]);
+      chain.reverse();
+      const near = nearestNode(tp.x, tp.y);
+      return { line: polyline(chain, C.cyan), node: near };
+    });
+  }
+  function groundY(x) {
+    // approximate the hill top for grass placement
+    if (x < L.tx) { const t = x / L.tx; return lerp(L.gy + H * .02, L.gy - H * .012, 1 - (1 - t) * (1 - t)); }
+    const t = (x - L.tx) / (L.hill - L.tx); return lerp(L.gy - H * .012, L.gy + H * .09, t * t);
+  }
+}
+
+
+function polyline(pts, col) {
+  const segL = []; let total = 0;
+  for (let i = 1; i < pts.length; i++) { const l = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); segL.push(l); total += l; }
+  return { pts, segL, total, col };
+}
+function along(pl, t) {
+  let d = t * pl.total;
+  for (let i = 0; i < pl.segL.length; i++) {
+    if (d <= pl.segL[i]) { const k = d / pl.segL[i], a = pl.pts[i], b = pl.pts[i + 1]; return [lerp(a[0], b[0], k), lerp(a[1], b[1], k)]; }
+    d -= pl.segL[i];
+  }
+  return pl.pts[pl.pts.length - 1];
+}
+
+function buildNetwork(R) {
+  const [x0, x1, y0, y1] = L.net;
+  nodes = [];
+  const target = clamp(Math.round((x1 - x0) * (y1 - y0) / 3600), 45, 190);
+  let tries = 0;
+  const minD = Math.sqrt((x1 - x0) * (y1 - y0) / target) * .62;
+  while (nodes.length < target && tries++ < target * 60) {
+    const fx = Math.pow(R(), 1.25);                // denser near the tree
+    const x = lerp(x0, x1, fx);
+    const ySpan = lerp(1, .55, fx);                 // the cloud narrows to the right
+    const mid = (y0 + y1) / 2 - (y1 - y0) * .08 * fx;
+    const y = mid + (R() - .5) * (y1 - y0) * ySpan;
+    if (nodes.some(n => (n.x - x) ** 2 + (n.y - y) ** 2 < minD * minD)) continue;
+    const hub = R() < .12;
+    nodes.push({ x, y, r: hub ? 3.4 + R() * 1.6 : 1.4 + R() * 1.6, gold: R() < .22, hub, ph: R() * 6.28, sp: .6 + R() * 1.6, flash: -1 });
+  }
+  edges = []; adj = nodes.map(() => []);
+  const key = new Set();
+  nodes.forEach((n, i) => {
+    const near = nodes.map((m, j) => [j, (m.x - n.x) ** 2 + (m.y - n.y) ** 2]).filter(v => v[0] !== i).sort((a, b) => a[1] - b[1]).slice(0, n.hub ? 5 : 3);
+    for (const [j, d2] of near) {
+      if (d2 > (minD * 2.6) ** 2) continue;
+      const k = i < j ? i + "_" + j : j + "_" + i;
+      if (key.has(k)) continue; key.add(k);
+      const len = Math.sqrt(d2);
+      edges.push({ a: i, b: j, len, gold: n.gold && nodes[j].gold });
+      adj[i].push(edges.length - 1); adj[j].push(edges.length - 1);
+    }
+  });
+}
+function nearestNode(x, y) {
+  let best = 0, bd = Infinity;
+  nodes.forEach((n, i) => { const d = (n.x - x) ** 2 + (n.y - y) ** 2; if (d < bd) { bd = d; best = i; } });
+  return best;
+}
+
+function newLeaf(initial) {
+  const fromTree = tips.length && Math.random() < .75;
+  let x, y;
+  if (fromTree) { const tp = tips[(Math.random() * tips.length) | 0]; x = tp.x; y = tp.y; if (tp.x > L.net[0] + W * .1) { x = L.tx + (Math.random() - .3) * W * .2; } }
+  else { x = Math.random() * L.net[0]; y = -20; }
+  if (initial) y = Math.random() * H;
+  const z = .5 + Math.random() * .9;
+  return { x, y, z, rot: Math.random() * 6.28, vr: (Math.random() - .5) * .04, s: (.5 + Math.random() * .6) * z, col: AUTUMN[(Math.random() * AUTUMN.length) | 0],
+    vy: .25 + Math.random() * .5, ph: Math.random() * 6.28, sw: .4 + Math.random() * .8, drift: .15 + Math.random() * .35 };
+}
+
+function spawnPulse(edgeIdx, fromNode, hops, color, speed) {
+  pulses.push({ kind: "edge", e: edgeIdx, from: fromNode, t: 0, hops, col: color, sp: speed || (.12 + Math.random() * .12) });
+}
+
+function signal(x, y) {
+  const s = nearestNode(x, y), now = performance.now();
+  // breadth first wave through the graph
+  const hop = new Array(nodes.length).fill(-1); hop[s] = 0; const q = [s];
+  while (q.length) { const i = q.shift(); for (const ei of adj[i]) { const e = edges[ei], j = e.a === i ? e.b : e.a; if (hop[j] < 0) { hop[j] = hop[i] + 1; q.push(j); } } }
+  nodes.forEach((n, i) => { if (hop[i] >= 0) n.flash = now + hop[i] * 85; });
+  for (const ei of adj[s]) spawnPulse(ei, s, 4, C.gold, .3);
+  waves.push({ x: nodes[s].x, y: nodes[s].y, t: now });
+  // shake a few leaves loose
+  for (let i = 0; i < 10 && leaves.length < 90; i++) { const l = newLeaf(false); const tp = tips[(Math.random() * tips.length) | 0]; l.x = tp.x; l.y = tp.y; l.vy = .8; leaves.push(l); }
+}
+
+function frame(now) {
+  if (!heroVisible) { requestAnimationFrame(frame); return; }
+  const t = (now - t0) / 1000;
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  ctx.drawImage(bg, 0, 0, W, H);
+  wind = lerp(wind, clamp(mouse.vx * .06, -2.5, 2.5), .04); mouse.vx *= .9;
+
+  /* root and spine pulses: energy rising from the soil into the network */
+  if (!REDUCED && Math.random() < .06) pulses.push({ kind: "line", pl: roots[(Math.random() * roots.length) | 0], t: 0, sp: .006 + Math.random() * .006 });
+  if (!REDUCED && spines.length && Math.random() < .03) { const sp = spines[(Math.random() * spines.length) | 0]; pulses.push({ kind: "line", pl: sp.line, t: 0, sp: .004 + Math.random() * .003, then: sp.node }); }
+  if (!REDUCED && pulses.length < 46 && Math.random() < .25) { const e = (Math.random() * edges.length) | 0; spawnPulse(e, edges[e].a, 2, Math.random() < .25 ? C.gold : C.cyan); }
+
+  /* hover highlight */
+  const HR = W < 720 ? 110 : 170;
+  const lit = [];
+  if (mouse.on) {
+    nodes.forEach((n, i) => { const d = Math.hypot(n.x - mouse.x, n.y - mouse.y); if (d < HR) lit.push([i, 1 - d / HR, d]); });
+    const hot = new Set(lit.map(v => v[0]));
+    ctx.lineWidth = 1.2;
+    for (const e of edges) {
+      if (!hot.has(e.a) && !hot.has(e.b)) continue;
+      const a = nodes[e.a], b = nodes[e.b];
+      const k = Math.max(...lit.filter(v => v[0] === e.a || v[0] === e.b).map(v => v[1]));
+      ctx.strokeStyle = `rgba(143,240,255,${.15 + k * .6})`;
+      ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+    }
+    lit.sort((a, b) => a[2] - b[2]).slice(0, 3).forEach(([i, k]) => {
+      ctx.strokeStyle = `rgba(255,200,97,${k * .7})`; ctx.setLineDash([3, 5]);
+      ctx.beginPath(); ctx.moveTo(mouse.x, mouse.y); ctx.lineTo(nodes[i].x, nodes[i].y); ctx.stroke(); ctx.setLineDash([]);
+    });
+    const gl = HR * 1.2; ctx.globalAlpha = .18; ctx.drawImage(SPR.cyan, mouse.x - gl / 2, mouse.y - gl / 2, gl, gl); ctx.globalAlpha = 1;
+  }
+  const litMap = new Map(lit.map(v => [v[0], v[1]]));
+
+  /* wave edges flashing */
+  ctx.lineWidth = 1.4;
+  for (const e of edges) {
+    const a = nodes[e.a], b = nodes[e.b];
+    const fa = a.flash > 0 ? now - a.flash : -1, fb = b.flash > 0 ? now - b.flash : -1;
+    if (fa > 0 && fa < 500 && fb > 0 && fb < 700) { ctx.strokeStyle = `rgba(255,200,97,${.7 * (1 - fa / 500)})`; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
+  }
+  for (let i = waves.length - 1; i >= 0; i--) {
+    const w = waves[i], k = (now - w.t) / 1400;
+    if (k > 1) { waves.splice(i, 1); continue; }
+    ctx.strokeStyle = `rgba(255,200,97,${.5 * (1 - k)})`; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(w.x, w.y, 10 + k * 260, 0, 7); ctx.stroke();
+  }
+
+  /* nodes */
+  for (let i = 0; i < nodes.length; i++) {
+    const n = nodes[i];
+    let a = REDUCED ? .8 : .5 + .5 * Math.sin(t * n.sp + n.ph);
+    let r = n.r, spr = n.gold ? SPR.gold : SPR.cyan;
+    const h = litMap.get(i); if (h) { a = Math.max(a, .6 + h * .4); r *= 1 + h * .9; }
+    if (n.flash > 0) { const f = now - n.flash; if (f > 0 && f < 700) { const k = 1 - f / 700; a = 1; r *= 1 + k * 1.6; spr = SPR.gold; } }
+    const gs = r * (n.hub ? 11 : 8);
+    ctx.globalAlpha = a * .75; ctx.drawImage(spr, n.x - gs / 2, n.y - gs / 2, gs, gs);
+    ctx.globalAlpha = .55 + a * .45; ctx.fillStyle = n.gold ? "#ffe2a6" : "#c9f8ff";
+    ctx.beginPath(); ctx.arc(n.x, n.y, r * .6, 0, 7); ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+
+  /* pulses */
+  for (let i = pulses.length - 1; i >= 0; i--) {
+    const p = pulses[i];
+    let x, y, col;
+    if (p.kind === "edge") {
+      const e = edges[p.e]; if (!e) { pulses.splice(i, 1); continue; }
+      p.t += (p.sp * 16) / Math.max(20, e.len);
+      const A = nodes[p.from], B = nodes[e.a === p.from ? e.b : e.a];
+      x = lerp(A.x, B.x, Math.min(1, p.t)); y = lerp(A.y, B.y, Math.min(1, p.t)); col = p.col;
+      if (p.t >= 1) {
+        const at = e.a === p.from ? e.b : e.a;
+        if (p.hops > 0) { const opts = adj[at].filter(k => k !== p.e); if (opts.length) spawnPulse(opts[(Math.random() * opts.length) | 0], at, p.hops - 1, p.col, p.sp); }
+        pulses.splice(i, 1);
+      }
+    } else {
+      p.t += p.sp; [x, y] = along(p.pl, Math.min(1, p.t)); col = p.pl.col;
+      if (p.t >= 1) { if (p.then != null && adj[p.then].length) spawnPulse(adj[p.then][0], p.then, 3, C.cyan); pulses.splice(i, 1); }
+    }
+    const s = 16;
+    ctx.drawImage(col === C.gold ? SPR.gold : SPR.cyan, x - s / 2, y - s / 2, s, s);
+    ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(x, y, 1.4, 0, 7); ctx.fill();
+  }
+
+  /* falling leaves; leaves that drift into the network turn into data */
+  const digStart = L.net[0] + W * .04, digSpan = W * .22;
+  for (let i = leaves.length - 1; i >= 0; i--) {
+    const l = leaves[i];
+    if (!REDUCED) {
+      l.ph += .02; l.y += l.vy * l.z; l.x += (Math.sin(l.ph) * l.sw + l.drift + wind) * l.z; l.rot += l.vr + Math.sin(l.ph) * .01;
+      if (mouse.on) { const dx = l.x - mouse.x, dy = l.y - mouse.y, d2 = dx * dx + dy * dy; if (d2 < 6400) { const f = (1 - d2 / 6400) * 2.2; l.x += dx / Math.sqrt(d2 + 1) * f; l.y += dy / Math.sqrt(d2 + 1) * f; l.vr += (Math.random() - .5) * .01; } }
+    }
+    if (l.y > H + 30 || l.x > W + 30 || l.x < -40) { if (leaves.length > (W < 720 ? 16 : 38)) leaves.splice(i, 1); else leaves[i] = newLeaf(false); continue; }
+    const dg = clamp((l.x - digStart) / digSpan, 0, 1);
+    ctx.save(); ctx.translate(l.x, l.y); ctx.rotate(l.rot); ctx.scale(l.s, l.s * (.75 + .25 * Math.cos(l.ph * 1.3)));
+    if (dg < .55) { ctx.globalAlpha = .95 - dg * .6; ctx.fillStyle = dg > 0 ? mix(l.col, C.cyan, dg * 1.6) : l.col; ctx.fill(LEAF);
+      ctx.strokeStyle = "rgba(40,20,10,.5)"; ctx.lineWidth = .8; ctx.beginPath(); ctx.moveTo(0, -8); ctx.lineTo(0, 9); ctx.stroke(); }
+    else { ctx.globalAlpha = 1.4 - dg; ctx.strokeStyle = C.cyan2; ctx.lineWidth = 1.2 / l.s; ctx.stroke(LEAF); }
+    ctx.restore();
+    if (dg > .4 && Math.random() < .3) { const s = 8; ctx.globalAlpha = .6 * (1 - dg); ctx.drawImage(SPR.cyan, l.x - s / 2 + (Math.random() - .5) * 10, l.y - s / 2 + (Math.random() - .5) * 10, s, s); ctx.globalAlpha = 1; }
+  }
+  if (!REDUCED) requestAnimationFrame(frame);
+}
+
+function init() { build(); }
+init();
+requestAnimationFrame(frame);
+
+let rT;
+addEventListener("resize", () => { clearTimeout(rT); rT = setTimeout(() => { if (Math.abs(scene.clientWidth - W) > 40 || Math.abs(scene.clientHeight - H) > 120) { init(); if (REDUCED) requestAnimationFrame(frame); } }, 200); });
+scene.addEventListener("pointermove", e => { const r = scene.getBoundingClientRect(); const x = e.clientX - r.left; mouse.vx += x - mouse.x > 200 ? 0 : x - mouse.x; mouse.x = x; mouse.y = e.clientY - r.top; mouse.on = true; });
+scene.addEventListener("pointerleave", () => { mouse.on = false; });
+scene.addEventListener("pointerdown", e => { const r = scene.getBoundingClientRect(); signal(e.clientX - r.left, e.clientY - r.top); if (REDUCED) requestAnimationFrame(frame); });
+new IntersectionObserver(es => { heroVisible = es[0].isIntersecting; }).observe(scene);
+
+/* typewriter roles */
+(function typer() {
+  const el = document.getElementById("role");
+  const roles = ["AI & Data Scientist", "Federated Learning Researcher", "Privacy Preserving ML", "Founder of TopTap", "NLP Engineer"];
+  if (REDUCED) { el.textContent = roles[0]; return; }
+  let i = 0, j = 0, del = false;
+  (function tick() {
+    const w = roles[i]; el.textContent = w.slice(0, j);
+    if (!del && j === w.length) { del = true; return setTimeout(tick, 1800); }
+    if (del && j === 0) { del = false; i = (i + 1) % roles.length; }
+    j += del ? -1 : 1; setTimeout(tick, del ? 35 : 70);
+  })();
+})();
+
+/* =====================================================================
+   AMBIENT LEAVES (whole page, very light)
+   ===================================================================== */
+(function ambient() {
+  if (REDUCED) return;
+  const cv = document.getElementById("ambient"), g = cv.getContext("2d");
+  let w, h; const list = [];
+  const size = () => { const d = Math.min(2, devicePixelRatio || 1); w = innerWidth; h = innerHeight; cv.width = w * d; cv.height = h * d; g.setTransform(d, 0, 0, d, 0, 0); };
+  size(); addEventListener("resize", size);
+  for (let i = 0; i < (w < 720 ? 6 : 12); i++) list.push({ x: Math.random() * w, y: Math.random() * h, s: .5 + Math.random() * .7, vy: .15 + Math.random() * .3, ph: Math.random() * 6, r: Math.random() * 6, c: AUTUMN[i % AUTUMN.length] });
+  (function loop() {
+    g.clearRect(0, 0, w, h);
+    if (scrollY > innerHeight * .6) for (const l of list) {
+      l.ph += .01; l.y += l.vy; l.x += Math.sin(l.ph) * .4; l.r += .005;
+      if (l.y > h + 20) { l.y = -20; l.x = Math.random() * w; }
+      g.save(); g.translate(l.x, l.y); g.rotate(l.r + Math.sin(l.ph) * .4); g.scale(l.s, l.s); g.globalAlpha = .22; g.fillStyle = l.c; g.fill(LEAF); g.restore();
+    }
+    requestAnimationFrame(loop);
+  })();
+})();
+
+/* =====================================================================
+   PROJECTS
+   ===================================================================== */
+const U = "https://github.com/garibli/";
+const PROJECTS = [
+  { t: "FedClinical", tag: "MSc thesis · Privacy ML", c: C.cyan, cat: ["privacy", "nlp"], wide: true, repo: "FedClinical-FederatedLearning",
+    d: "A federated learning framework built from scratch for mental health text classification, with differential privacy through Opacus. It puts a number on what privacy costs, and shows the cost is not linear and not spread evenly across classes.",
+    k: "141×", kl: "less data sent per round", chips: ["PyTorch", "Opacus", "Transformers", "PEFT", "LoRA", "RoBERTa"] },
+  { t: "Momentum LSTM", tag: "Time series · Finance", c: C.gold, cat: ["finance"], repo: "Momentum-LTSM-Forecast",
+    d: "Forecasts daily returns for 442 companies with a custom Momentum LSTM, a PCA market encoder and a 5 model ensemble tuned with Optuna. Explained with Captum.",
+    k: "442", kl: "stocks forecast together", chips: ["PyTorch", "Optuna", "Captum", "PCA"] },
+  { t: "NLP Models", tag: "NLP · Deep learning", c: C.orange, cat: ["nlp"], repo: "NLPModels",
+    d: "Three fine tuned models for offensive language detection, sentiment analysis and disaster help requests, served through one REST interface with LIME explanations.",
+    k: "3", kl: "transformer models", chips: ["RoBERTa", "BERT", "Django", "LIME"] },
+  { t: "Realtime Housing", tag: "Data engineering · Streaming", c: C.cyan2, cat: ["data"], repo: "Realtime-Housing-Analytics",
+    d: "A live housing price analysis pipeline built with Apache Kafka, Spark Structured Streaming and Spark MLlib.",
+    k: "Live", kl: "streaming pipeline", chips: ["Kafka", "Spark", "MLlib", "Python"] },
+  { t: "ML Heart Condition", tag: "Health · Machine learning", c: C.rust, cat: ["health"], repo: "MLHeartCondition",
+    d: "Trains and compares machine learning models to find the best fit for illness detection problems.",
+    k: "ML", kl: "model comparison", chips: ["Python", "scikit-learn", "Pandas"] },
+  { t: "TopTap", tag: "Product · Founder", c: C.amber, cat: ["product"], wide: true,
+    d: "A social sports platform I built and shipped alone to the App Store and Google Play. A React Native and TypeScript app, a Django and PostgreSQL backend, and one JWT secured REST API that serves iOS, Android, the website and an operator panel.",
+    k: "4", kl: "clients on one API", chips: ["React Native", "TypeScript", "Django REST", "PostgreSQL", "Sentry"] },
+  { t: "Uber Rides Viz", tag: "Data visualisation · UX", c: C.amber, cat: ["health"], repo: "Uber-Rides-Data-Visualization-by-Altair",
+    d: "Three visualisation systems for an Uber rides behaviour dataset, compared through real world user testing.",
+    k: "3", kl: "systems tested with users", chips: ["Altair", "Jupyter", "Pandas"] },
+];
+const FILTERS = [["all", "All"], ["privacy", "Privacy"], ["nlp", "NLP"], ["finance", "Finance"], ["data", "Data engineering"], ["product", "Product"], ["health", "Health & Viz"]];
+const deco = c => `<svg class="deco" viewBox="0 0 150 120" fill="none" stroke="${c}" stroke-width="1.3">${[0, 1, 2, 3, 4, 5].map(i => `<path d="M${40 + i * 16},0 V${20 + i * 6} l${14 + i * 2},${14 + i * 2} V${60 + i * 8}"/><circle cx="${54 + i * 18}" cy="${63 + i * 8}" r="3"/>`).join("")}</svg>`;
+const grid = document.getElementById("grid");
+grid.innerHTML = PROJECTS.map(p => `
+  <article class="card${p.wide ? " wide" : ""}" style="--c:${p.c}" data-cat="${p.cat.join(" ")}">
+    ${deco(p.c)}
+    <svg class="bigleaf" viewBox="-12 -12 24 24"><path fill="${p.c}" d="${LEAF_D}"/></svg>
+    <div class="tag">${leafSvg(p.c)}${p.tag}</div>
+    <div class="row"><h3>${p.t}</h3><div class="kpi"><b>${p.k}</b><span>${p.kl}</span></div></div>
+    <p>${p.d}</p>
+    <div class="foot"><div class="chips">${p.chips.map(c => `<span class="chip">${c}</span>`).join("")}</div>
+    ${p.repo ? `<span class="go">View code <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span><a class="cover" href="${U + p.repo}" target="_blank" rel="noopener" aria-label="${p.t} on GitHub"></a>` : `<span class="go">Live on iOS and Android</span>`}</div>
+  </article>`).join("");
+const fl = document.getElementById("filters");
+fl.innerHTML = FILTERS.map(([k, n], i) => `<button data-f="${k}" class="${i ? "" : "on"}">${n}</button>`).join("");
+fl.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  fl.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b));
+  const f = b.dataset.f;
+  grid.querySelectorAll(".card").forEach(c => { const show = f === "all" || c.dataset.cat.split(" ").includes(f); c.classList.toggle("hide", !show); c.classList.toggle("wide", show && f === "all" && PROJECTS.find(p => p.t === c.querySelector("h3").textContent).wide); });
+});
+if (!TOUCH) grid.querySelectorAll(".card").forEach(card => {
+  card.addEventListener("pointermove", e => {
+    const r = card.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    card.style.setProperty("--mx", x * 100 + "%"); card.style.setProperty("--my", y * 100 + "%");
+    card.style.transform = `rotateX(${(.5 - y) * 6}deg) rotateY(${(x - .5) * 7}deg) translateY(-4px)`;
+  });
+  card.addEventListener("pointerleave", () => { card.style.transform = ""; });
+});
+
+/* =====================================================================
+   RESEARCH: privacy explorer
+   ===================================================================== */
+const STEPS = [
+  { n: "Centralised", long: "Centralised training", f1: .878, priv: 0, noise: 0, flip: 0, txt: "All the data sits in one place. This gives the best accuracy, but no privacy at all." },
+  { n: "Federated", long: "Federated, no differential privacy", f1: .861, priv: .3, noise: .07, flip: 0, txt: "The data never leaves the five clients. Federation alone costs only 1.7 points." },
+  { n: "ε = 8", long: "Federated with differential privacy, ε = 8", f1: .720, priv: .6, noise: .42, flip: .1, txt: "Adding differential privacy is the big jump. It costs 14.1 points." },
+  { n: "ε = 3", long: "Federated with differential privacy, ε = 3", f1: .684, priv: .78, noise: .55, flip: .16, txt: "Tightening from ε 8 to ε 3 costs only 3.6 more points. This is a usable operating range." },
+  { n: "ε = 1", long: "Federated with differential privacy, ε = 1", f1: .589, priv: 1, noise: .9, flip: .5, txt: "Strong privacy, heavy damage. Half of all anxiety posts get labelled as depression, exactly the distinction a triage system needs." },
+];
+const eps = document.getElementById("eps"), f1El = document.getElementById("f1"), dEl = document.getElementById("delta");
+const ticks = document.getElementById("ticks"), bars = document.getElementById("bars");
+ticks.innerHTML = STEPS.map((s, i) => `<button data-i="${i}">${s.n}</button>`).join("");
+bars.innerHTML = STEPS.map((s, i) => `<div class="bar" data-i="${i}"><span>${s.n}</span><div class="track"><div class="fill" style="background:${mix(C.cyan2, "#1590b3", i / 4)}"></div></div><b>${s.f1.toFixed(3)}</b></div>`).join("");
+let shownF1 = .878, step = 0;
+function setStep(i) {
+  step = i; eps.value = i; const s = STEPS[i];
+  ticks.querySelectorAll("button").forEach((b, k) => b.classList.toggle("on", k === i));
+  bars.querySelectorAll(".bar").forEach((b, k) => b.classList.toggle("on", k === i));
+  document.getElementById("stepname").textContent = s.long;
+  const ins = document.getElementById("insight"); ins.style.opacity = 0; setTimeout(() => { ins.textContent = s.txt; ins.style.opacity = 1; }, 150);
+  document.getElementById("meter").style.width = (s.priv * 100) + "%";
+  const d = (s.f1 - .878) * 100;
+  dEl.textContent = i ? `${d.toFixed(1)} pts` : "baseline";
+  dEl.style.background = i ? "rgba(210,84,42,.18)" : "rgba(61,220,255,.14)"; dEl.style.color = i ? "#ff9b74" : C.cyan2;
+  const from = shownF1, to = s.f1, st = performance.now();
+  (function anim(n) { const k = Math.min(1, (n - st) / 600), e = 1 - Math.pow(1 - k, 3); shownF1 = lerp(from, to, e); f1El.textContent = shownF1.toFixed(3); if (k < 1) requestAnimationFrame(anim); })(st);
+}
+eps.addEventListener("input", () => setStep(+eps.value));
+ticks.addEventListener("click", e => { const b = e.target.closest("button"); if (b) setStep(+b.dataset.i); });
+bars.addEventListener("click", e => { const b = e.target.closest(".bar"); if (b) setStep(+b.dataset.i); });
+
+/* noise canvas: two classes that blur together as privacy noise grows */
+(function noiseViz() {
+  const cv = document.getElementById("noise"), g = cv.getContext("2d");
+  const R = rngFrom(42), pts = [];
+  for (let i = 0; i < 140; i++) {
+    const cls = i % 2, a = R() * 6.28, rr = Math.sqrt(R()) * .17;
+    pts.push({ cls, bx: (cls ? .7 : .3) + Math.cos(a) * rr, by: .5 + Math.sin(a) * rr * 1.3, jx: R() * 2 - 1, jy: R() * 2 - 1, f: R(), x: 0, y: 0, ph: R() * 6.28 });
+  }
+  let w, h, cur = { noise: 0, flip: 0 };
+  const size = () => { const d = Math.min(2, devicePixelRatio || 1); w = cv.clientWidth; h = cv.clientHeight; cv.width = w * d; cv.height = h * d; g.setTransform(d, 0, 0, d, 0, 0); };
+  size(); addEventListener("resize", size);
+  let visible = false; new IntersectionObserver(es => visible = es[0].isIntersecting).observe(cv);
+  (function loop(n) {
+    requestAnimationFrame(loop);
+    if (!visible) return;
+    const tgt = STEPS[step]; cur.noise = lerp(cur.noise, tgt.noise, .06); cur.flip = lerp(cur.flip, tgt.flip, .06);
+    g.clearRect(0, 0, w, h);
+    // decision boundary
+    g.strokeStyle = "rgba(255,255,255,.18)"; g.setLineDash([4, 6]); g.beginPath(); g.moveTo(w * .5, 14); g.lineTo(w * .5, h - 14); g.stroke(); g.setLineDash([]);
+    g.font = "600 12px Inter, sans-serif"; g.fillStyle = "rgba(255,200,97,.8)"; g.fillText("ANXIETY", 16, 24);
+    g.fillStyle = "rgba(61,220,255,.8)"; g.textAlign = "right"; g.fillText("DEPRESSION", w - 16, 24); g.textAlign = "left";
+    let wrong = 0;
+    const tt = (n || 0) / 1000;
+    for (const p of pts) {
+      const flipped = p.cls === 0 && p.f < cur.flip;
+      let tx = p.bx + p.jx * cur.noise * .32 + Math.sin(tt * 1.3 + p.ph) * cur.noise * .025;
+      let ty = p.by + p.jy * cur.noise * .3 + Math.cos(tt * 1.1 + p.ph) * cur.noise * .025;
+      if (flipped) tx = lerp(tx, .62 + p.jx * .1, Math.min(1, (cur.flip - p.f) * 6));
+      p.x = lerp(p.x || tx, tx, .1); p.y = lerp(p.y || ty, ty, .1);
+      const X = p.x * w, Y = clamp(p.y, .05, .95) * h;
+      const wrongSide = p.cls === 0 ? p.x > .5 : p.x < .5;
+      const col = p.cls ? C.cyan : C.gold;
+      g.globalAlpha = .35; g.drawImage(p.cls ? SPR.cyan : SPR.gold, X - 9, Y - 9, 18, 18); g.globalAlpha = 1;
+      g.fillStyle = col; g.beginPath(); g.arc(X, Y, 3.4, 0, 7); g.fill();
+      if (wrongSide) { wrong++; g.strokeStyle = "#ff6b4a"; g.lineWidth = 1.6; g.beginPath(); g.arc(X, Y, 7, 0, 7); g.stroke(); }
+    }
+    g.fillStyle = "rgba(185,195,211,.85)"; g.font = "500 12px Inter, sans-serif"; g.fillText(`${wrong} of ${pts.length} posts on the wrong side`, 16, h - 14);
+  })();
+})();
+setStep(0);
+
+/* =====================================================================
+   JOURNEY
+   ===================================================================== */
+const JOURNEY = [
+  ["2020", "BSc Computer Engineering", "Sakarya University, Turkey", "Thesis on analysing text with deep learning and NLP.", C.gold],
+  ["2021", "Erasmus Exchange", "UCLM, Ciudad Real, Spain", "A year of study abroad in Spain.", C.gold],
+  ["2023", "Data Analyst and Engineer Intern", "Facility Management Group, Baku", "Kafka and Hadoop pipelines took reporting from overnight to same day. 89% forecasting accuracy with Spark.", C.orange],
+  ["2024", "Software and Web Developer Intern", "Socar Tech, Baku", "Shipped 3 internal web apps used by more than 100 people across 3 departments.", C.orange],
+  ["2024", "Research Assistant", "Turkcell NLP Study Group, Sakarya", "Benchmarked multilingual NLP models for sentiment and offensive language on Turkish data.", C.cyan2],
+  ["2024", "Mentor", "Data Science Community, Sakarya University", "Mentored more than 20 students in Python, PostgreSQL and machine learning.", C.cyan2],
+  ["2025", "MSc Data Science", "University of Glasgow", "Thesis: FedClinical, federated learning with differential privacy for mental health text.", C.gold],
+  ["2026", "Artificial Intelligence Intern", "FlyRank AI, Chicago (remote)", "An end to end ranking pipeline for content refresh, with honest baselines and strict leakage checks.", C.orange],
+  ["2026", "Founder and Developer", "TopTap, Baku", "Built and shipped a social sports app alone to the App Store and Google Play.", C.rust],
+  ["2026", "PhD Computing Science", "University of Glasgow", "Researching federated learning, differential privacy and AI privacy until 2030.", C.cyan],
+];
+const tl = document.getElementById("timeline");
+tl.insertAdjacentHTML("beforeend", JOURNEY.map(([y, t, o, d, k]) => `
+  <div class="t-item reveal" style="--k:${k}"><span class="dot"></span>
+    <div class="t-card"><div class="yr">${y}</div><h4>${t}</h4><div class="org">${o}</div><p>${d}</p></div></div>`).join(""));
+const fill = document.getElementById("trackfill");
+function trackScroll() {
+  const r = tl.getBoundingClientRect(), vh = innerHeight;
+  const k = clamp((vh * .6 - r.top) / r.height, 0, 1);
+  fill.style.height = (k * 100) + "%";
+}
+
+/* =====================================================================
+   TOOLKIT
+   ===================================================================== */
+const TOOLS = [
+  ["Machine Learning & AI", C.cyan, ["PyTorch", "Hugging Face", "PEFT", "LoRA", "scikit-learn", "Optuna", "Captum", "LIME"]],
+  ["Privacy & Governance", C.cyan2, ["Federated Learning", "Differential Privacy", "Opacus", "Reproducible Workflows", "Leakage Controls"]],
+  ["Data Engineering", C.gold, ["Apache Spark", "PySpark", "Kafka", "Hadoop", "SQL", "DuckDB", "ETL & Streaming"]],
+  ["Software", C.orange, ["Python", "Django REST", "React Native", "TypeScript", "PostgreSQL", "JWT Auth", "Git", "Sentry"]],
+  ["Data & Analysis", C.amber, ["EDA", "Statistics", "Experiment Design", "Altair", "Dashboards"]],
+  ["Languages", C.rust, ["Azerbaijani", "Turkish", "Russian", "English", "French"]],
+];
+document.getElementById("tools").innerHTML = TOOLS.map(([n, k, cs]) => `
+  <div class="tool reveal" style="--k:${k}"><h4>${leafSvg(k)}${n}</h4><div class="chips">${cs.map(c => `<span class="chip">${c}</span>`).join("")}</div></div>`).join("");
+
+/* =====================================================================
+   PAGE: nav, progress, reveals, counters
+   ===================================================================== */
+const nav = document.getElementById("nav"), prog = document.getElementById("progress");
+const links = [...document.querySelectorAll(".nav ul a")];
+const secs = links.map(a => document.querySelector(a.getAttribute("href")));
+function onScroll() {
+  const y = scrollY, max = document.documentElement.scrollHeight - innerHeight;
+  nav.classList.toggle("solid", y > 40);
+  prog.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
+  let cur = -1; secs.forEach((s, i) => { if (s.getBoundingClientRect().top < innerHeight * .4) cur = i; });
+  links.forEach((a, i) => a.classList.toggle("on", i === cur));
+  trackScroll();
+}
+addEventListener("scroll", onScroll, { passive: true }); onScroll();
+
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  e.target.classList.add("in"); io.unobserve(e.target);
+  e.target.querySelectorAll("[data-count]").forEach(countUp);
+  if (e.target.contains(bars)) bars.querySelectorAll(".fill").forEach((f, i) => f.style.width = (STEPS[i].f1 * 100) + "%");
+}), { threshold: .15 });
+document.querySelectorAll(".reveal").forEach((el, i) => { el.style.transitionDelay = (i % 4) * 70 + "ms"; io.observe(el); });
+function countUp(el) {
+  const to = +el.dataset.count, suf = el.dataset.suffix || "", st = performance.now(), dur = 1400;
+  (function a(n) { const k = Math.min(1, (n - st) / dur), e = 1 - Math.pow(1 - k, 3); el.textContent = Math.round(to * e) + suf; if (k < 1) requestAnimationFrame(a); })(st);
+}
+})();
+</script>
+</body>
+</html>
