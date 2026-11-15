@@ -174,6 +174,90 @@ h2 em{font-style:normal;background:linear-gradient(90deg,var(--gold),var(--orang
 .tile b{display:block;font-family:var(--display);font-size:26px;color:var(--gold);line-height:1.2}
 .tile span{color:var(--ink2);font-size:14px}
 
+
+/* ---------- BSc: Turkish NLP lab ---------- */
+#bsc{--t:var(--gold)}
+.tr-tabs{display:flex;gap:10px;margin:28px 0 0;flex-wrap:wrap}
+.tr-tabs button{display:flex;align-items:center;gap:10px;font:600 14px var(--body);color:var(--ink2);background:rgba(16,32,58,.6);border:1px solid var(--line);padding:10px 18px;border-radius:99px;cursor:pointer;transition:all .25s}
+.tr-tabs button i{width:9px;height:9px;border-radius:50%;background:var(--k);box-shadow:0 0 10px var(--k)}
+.tr-tabs button small{font-weight:500;color:var(--muted);font-size:12px}
+.tr-tabs button:hover{color:var(--ink);border-color:rgba(255,255,255,.22)}
+.tr-tabs button.on{color:var(--ink);border-color:var(--k);background:color-mix(in srgb,var(--k) 14%,rgba(16,32,58,.7))}
+.tr-lab{grid-template-columns:1.2fr 1fr;margin-top:20px}
+.tr-console,.tr-report{position:relative}
+.tr-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.tr-head h3{font-family:var(--display);font-size:24px;margin-top:2px}
+.tr-badge{flex:none;font-size:12px;font-weight:600;color:var(--t);padding:5px 12px;border-radius:99px;border:1px solid color-mix(in srgb,var(--t) 45%,transparent);background:color-mix(in srgb,var(--t) 10%,transparent)}
+.tr-examples{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 14px}
+.tr-examples button{font:500 13px var(--body);color:var(--ink2);background:rgba(7,13,26,.5);border:1px solid var(--line);padding:7px 13px;border-radius:10px;cursor:pointer;text-align:left;transition:all .2s}
+.tr-examples button:hover{color:var(--ink);border-color:rgba(255,255,255,.25)}
+.tr-examples button.on{color:var(--ink);border-color:var(--t);background:color-mix(in srgb,var(--t) 10%,transparent)}
+.tr-input{position:relative;min-height:118px;padding:18px 18px;border-radius:14px;background:rgba(7,13,26,.65);border:1px solid var(--line);font-size:17px;line-height:2.05;color:var(--ink);overflow:hidden}
+.tr-input .w{display:inline;position:relative;border-radius:6px;padding:2px 0;transition:background .35s,box-shadow .35s,color .35s,padding .35s,margin .35s}
+.tr-input .p{transition:opacity .4s,color .4s}
+.tr-input .suf{transition:color .35s,background .35s}
+.tr-input.clean .p{opacity:.18}
+.tr-input.lower .w{text-transform:lowercase}
+.tr-input.split .w{padding:3px 6px;margin:0 1px;background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
+.tr-input.split .suf{color:var(--t);background:color-mix(in srgb,var(--t) 12%,transparent);border-left:1px dashed color-mix(in srgb,var(--t) 70%,transparent);padding-left:2px;margin-left:1px;border-radius:0 4px 4px 0}
+.tr-input .w.read{box-shadow:inset 0 0 0 1px var(--cyan),0 0 14px rgba(61,220,255,.45)}
+.tr-input.done .w[data-lime="2"]{background:rgba(61,220,255,.42);box-shadow:none}
+.tr-input.done .w[data-lime="1"]{background:rgba(61,220,255,.2);box-shadow:none}
+.tr-input.done .w[data-lime="-1"]{background:rgba(232,119,46,.3);box-shadow:none}
+.tr-input.done .w[data-tag="trap"]{background:rgba(255,200,97,.22);box-shadow:inset 0 -2px 0 var(--gold)}
+.tr-input.done .w[data-tag="loc"]{background:rgba(61,220,255,.22);box-shadow:inset 0 -2px 0 var(--cyan)}
+.tr-input.done .w[data-tag="need"]{background:rgba(255,200,97,.25);box-shadow:inset 0 -2px 0 var(--gold)}
+.tr-input.done .w[data-tag="tel"]{background:rgba(232,119,46,.25);box-shadow:inset 0 -2px 0 var(--orange)}
+.tr-input .scan{position:absolute;top:0;bottom:0;width:90px;left:-120px;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(61,220,255,.18),transparent)}
+.tr-input canvas{display:block;width:100%;height:300px}
+.tr-en{font-size:13.5px;color:var(--muted);font-style:italic;margin:8px 2px 0;min-height:20px}
+.tr-run-row{display:flex;align-items:center;gap:18px;margin-top:16px;flex-wrap:wrap}
+.tr-run{border:0;cursor:pointer;font-family:var(--body)}
+.tr-run[disabled]{opacity:.6;cursor:default;transform:none!important}
+.tr-steps{position:relative;flex:1;min-width:240px;display:grid;grid-template-columns:repeat(4,1fr);font-size:12px;color:var(--muted);padding-top:14px}
+.tr-steps::before{content:"";position:absolute;left:6px;right:6px;top:4px;height:2px;border-radius:2px;background:rgba(255,255,255,.08)}
+.tr-steps i{position:absolute;left:6px;top:4px;height:2px;width:0;border-radius:2px;background:linear-gradient(90deg,var(--orange),var(--t),var(--cyan));transition:width .45s ease}
+.tr-steps span{position:relative;transition:color .3s}
+.tr-steps span::before{content:"";position:absolute;left:0;top:-14px;width:9px;height:9px;border-radius:50%;background:var(--navy0);border:2px solid rgba(255,255,255,.2);transition:all .3s}
+.tr-steps span.on{color:var(--ink)}
+.tr-steps span.on::before{border-color:var(--t);background:var(--t);box-shadow:0 0 10px var(--t)}
+.tr-out{margin-top:18px;min-height:120px}
+.tr-bars{display:grid;gap:8px}
+.tr-bar{display:grid;grid-template-columns:130px 1fr 54px;gap:12px;align-items:center;font-size:13.5px;color:var(--ink2)}
+.tr-bar small{color:var(--muted)}
+.tr-bar .track{height:14px;border-radius:4px;background:rgba(255,255,255,.05);overflow:hidden}
+.tr-bar .fill{height:100%;width:0;border-radius:4px;background:color-mix(in srgb,var(--t) 40%,transparent);transition:width 1s cubic-bezier(.2,.7,.2,1)}
+.tr-bar.win{color:var(--ink)}
+.tr-bar.win .fill{background:var(--t);box-shadow:0 0 14px color-mix(in srgb,var(--t) 60%,transparent)}
+.tr-bar b{text-align:right;font-weight:600;color:var(--ink)}
+.tr-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--ink2);margin-top:14px}
+.tr-legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-2px}
+.tr-verdict{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:12px;font-weight:600;font-size:15px}
+.tr-verdict.no{color:var(--cyan2);background:rgba(61,220,255,.1);border:1px solid rgba(61,220,255,.4)}
+.tr-verdict.yes{color:#ffb39b;background:rgba(210,84,42,.16);border:1px solid rgba(232,119,46,.55)}
+.tr-why{color:var(--ink2);font-size:14.5px;margin-top:12px}
+.tr-extract{margin-top:14px;padding:14px 16px;border-radius:12px;background:rgba(7,13,26,.55);border:1px solid rgba(232,119,46,.35);display:grid;gap:10px}
+.tr-extract div{display:grid;grid-template-columns:96px 1fr;gap:10px;font-size:14px;color:var(--ink)}
+.tr-extract span{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding-top:2px}
+.tr-pop{opacity:0;transform:translateY(8px);animation:trpop .5s forwards}
+@keyframes trpop{to{opacity:1;transform:none}}
+.tr-report .f1{flex-wrap:wrap}
+.tr-report .f1 .delta{white-space:nowrap}
+.tr-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0 20px}
+.tr-metrics div{padding:12px;border-radius:12px;background:rgba(7,13,26,.5);border:1px solid var(--line)}
+.tr-metrics b{display:block;font-family:var(--display);font-size:20px;color:var(--ink)}
+.tr-metrics span{font-size:12px;color:var(--muted)}
+.tr-cm-title{margin-bottom:8px}
+.tr-cm{display:grid;gap:4px;font-size:12.5px}
+.tr-cm .lab{color:var(--muted);display:flex;align-items:center;justify-content:center;text-align:center;font-size:11.5px;line-height:1.2;padding:2px}
+.tr-cm .lab.row{justify-content:flex-end;text-align:right;padding-right:6px}
+.tr-cm .cell{aspect-ratio:1.5;display:flex;align-items:center;justify-content:center;border-radius:6px;font-weight:600;color:var(--ink);cursor:default;transition:transform .2s,box-shadow .2s;border:1px solid transparent}
+.tr-cm .cell:hover{transform:scale(1.06);box-shadow:0 0 0 2px var(--ink);z-index:1}
+.tr-cm.small .cell{aspect-ratio:1.05;font-size:11.5px}
+.tr-tip{min-height:42px;margin-top:10px;font-size:13px;color:var(--ink2)}
+.tr-note{margin:10px 0 14px}
+.tr-report .chips{padding-top:0}
+.tr-report .chip{--c:var(--t)}
 /* ---------- journey ---------- */
 .timeline{position:relative;margin-top:50px}
 .track-line{position:absolute;left:50%;top:0;bottom:0;width:3px;margin-left:-1.5px;background:rgba(255,255,255,.07);border-radius:3px}
@@ -214,6 +298,7 @@ footer svg{width:14px;height:14px;display:inline-block;vertical-align:-2px;margi
 @media (max-width:980px){
   .grid{grid-template-columns:repeat(2,1fr)}
   .lab{grid-template-columns:1fr}
+  .tr-lab{grid-template-columns:1fr}
   .about{grid-template-columns:1fr}
   .avatar{max-width:300px;margin:0 auto}
   .stats{grid-template-columns:repeat(2,1fr)}
@@ -290,6 +375,33 @@ footer svg{width:14px;height:14px;display:inline-block;vertical-align:-2px;margi
   .tiles{grid-template-columns:1fr;gap:12px;margin-top:16px}
   .tile{padding:16px 18px}
   .tile b{font-size:23px}
+  /* bsc lab */
+  .tr-tabs{flex-wrap:nowrap;overflow-x:auto;margin:22px -20px 0;padding:2px 20px;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,transparent,#000 20px,#000 85%,transparent);mask-image:linear-gradient(90deg,transparent,#000 20px,#000 85%,transparent)}
+  .tr-tabs::-webkit-scrollbar{display:none}
+  .tr-tabs button{flex:none;padding:9px 14px;font-size:13.5px}
+  .tr-tabs button small{display:none}
+  .tr-lab{gap:16px;margin-top:16px}
+  .tr-head h3{font-size:21px}
+  .tr-badge{font-size:11px;padding:4px 10px}
+  .tr-examples{flex-wrap:nowrap;overflow-x:auto;margin:14px -18px 12px;padding:2px 18px;scrollbar-width:none}
+  .tr-examples::-webkit-scrollbar{display:none}
+  .tr-examples button{flex:none;font-size:12.5px;padding:7px 11px}
+  .tr-input{font-size:15px;line-height:2.1;padding:14px;min-height:96px}
+  .tr-input canvas{height:270px}
+  .tr-en{font-size:12.5px}
+  .tr-run-row{gap:14px}
+  .tr-run{width:100%;justify-content:center}
+  .tr-steps{min-width:0;width:100%}
+  .tr-bar{grid-template-columns:96px 1fr 46px;gap:8px;font-size:12.5px}
+  .tr-bar small{display:none}
+  .tr-extract div{grid-template-columns:1fr;gap:2px}
+  .tr-metrics{gap:8px}
+  .tr-metrics div{padding:10px 8px}
+  .tr-metrics b{font-size:17px}
+  .tr-metrics span{font-size:11px;line-height:1.3;display:block}
+  .tr-cm{font-size:11px;gap:3px}
+  .tr-cm .lab{font-size:10px}
+  .tr-cm.small .cell{font-size:10.5px}
   /* journey */
   .timeline{margin-top:34px}
   .track-line{left:14px}
@@ -429,6 +541,41 @@ footer svg{width:14px;height:14px;display:inline-block;vertical-align:-2px;margi
     <div class="tile reveal"><b>502 MB → 3.55 MB</b><span>sent per round, by training only LoRA adapters and a classification head</span></div>
     <div class="tile reveal"><b>0.71%</b><span>of the model is trained, which makes federation practical</span></div>
     <div class="tile reveal"><b>496 of 992</b><span>test texts leaked into training in the source data. Found and fixed before reporting any result</span></div>
+  </div>
+</section>
+
+<!-- ================= BSC RESEARCH ================= -->
+<section class="block" id="bsc">
+  <div class="kicker reveal">Research · BSc thesis · Sakarya University</div>
+  <h2 class="reveal">Teaching machines to <em>read Turkish</em></h2>
+  <p class="lead reveal">For my BSc thesis I built three Turkish language models and served them in a Django web app that explains its answers with LIME. Turkish glues meaning onto words with suffixes, which makes it hard for machines to read. Pick a model and run a real example from the app.</p>
+  <div class="tr-tabs reveal" id="trTabs" role="tablist"></div>
+  <div class="lab tr-lab" id="trLab">
+    <div class="panel reveal tr-console">
+      <div class="tr-head">
+        <div><div class="small" id="trBase"></div><h3 id="trName"></h3></div>
+        <span class="tr-badge" id="trTask"></span>
+      </div>
+      <div class="tr-examples" id="trExamples"></div>
+      <div class="tr-input" id="trInput" lang="tr"></div>
+      <p class="tr-en" id="trEn"></p>
+      <div class="tr-run-row">
+        <button class="btn primary tr-run" id="trRun" type="button">Run the model
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></button>
+        <div class="tr-steps" id="trSteps"><span>Clean</span><span>Split</span><span>Read</span><span>Decide</span><i></i></div>
+      </div>
+      <div class="tr-out" id="trOut"></div>
+    </div>
+    <div class="panel reveal tr-report">
+      <div class="small">How it scored on test data it never saw</div>
+      <div class="f1"><b id="trAcc">0%</b><span class="delta" id="trAccSub"></span></div>
+      <div class="tr-metrics" id="trMetrics"></div>
+      <div class="small tr-cm-title" id="trCmTitle"></div>
+      <div class="tr-cm" id="trCm"></div>
+      <div class="tr-tip" id="trTip">Hover a box to see what it means.</div>
+      <p class="small tr-note" id="trNote"></p>
+      <div class="chips" id="trStack"></div>
+    </div>
   </div>
 </section>
 
@@ -1181,6 +1328,231 @@ bars.addEventListener("click", e => { const b = e.target.closest(".bar"); if (b)
   })();
 })();
 setStep(0);
+
+
+/* =====================================================================
+   BSC RESEARCH: Turkish NLP lab (real outputs and scores from the thesis)
+   ===================================================================== */
+(function turkishLab() {
+  const EMO = [["korku", "fear"], ["kızgın", "angry"], ["mutlu", "happy"], ["sürpriz", "surprise"], ["üzgün", "sad"]];
+  const MODELS = [
+    { id: "emo", tab: "Emotion", sub: "5 feelings", color: C.gold, name: "Emotion classifier", base: "BERTurk, dbmdz/bert-base-turkish-cased", task: "5 classes", lower: false,
+      examples: [
+        { label: "A sunny day", tr: "Bu gün^1 hava^1 çok^1 güzel^2 . Dış|arı^-1 çık|ıp^-1 biraz eğlen|eceğ|im^1 . Her şey^-1 çok^1 güzel^2 ol|acak !",
+          en: "The weather is so nice today. I'll go out and have some fun. Everything will be great!", probs: [.001, .002, .995, .001, .001], lime: true },
+        { label: "An angry rant", tr: "yalancı insan|lar|dan nefret eder|im ! Hep|si|ni toplu|ca hayat|ım|dan at|acağ|ım ! Hep|iniz iki yüz|lü pis|lik|ler|siniz !",
+          en: "I hate liars! I'm throwing them all out of my life! You're all two faced creeps!", probs: [.001, .997, .001, .001, .001], lime: false } ],
+      acc: 991 / 999, accSub: "991 of 999 test texts",
+      metrics: [["1.00", "ROC AUC for every class"], ["~800", "texts per class, balanced"], ["2", "epochs of patience, early stop"]],
+      cm: { rows: EMO.map(e => e[0]), cols: EMO.map(e => e[0]), v: [[199, 1, 0, 0, 0], [0, 199, 0, 0, 0], [0, 0, 196, 3, 1], [0, 1, 1, 198, 0], [0, 0, 1, 0, 199]] },
+      note: "Most mistakes are between happy and surprise, which sound alike in Turkish.",
+      stack: ["BERTurk", "PyTorch", "AdamW", "Early stopping", "LIME", "Django"] },
+    { id: "off", tab: "Offensive", sub: "insult detection", color: C.orange, name: "Offensive language detector", base: "RoBERTa, fine tuned with stratified 5 fold CV", task: "2 classes", lower: false, dots: true,
+      acc: 7464 / 8480, accSub: "7,464 of 8,480 test tweets",
+      metrics: [["0.94", "ROC AUC"], ["89.2%", "precision on offensive"], ["84.6%", "recall on offensive"]],
+      cm: { rows: ["Not offensive", "Offensive"], cols: ["Not offensive", "Offensive"], v: [[4113, 405], [611, 3351]] },
+      note: "Trained on a 45,000 tweet Turkish dataset after cleaning emojis, hashtags and noise.",
+      stack: ["RoBERTa", "PyTorch", "AdamW", "Cross validation", "scikit-learn"] },
+    { id: "dis", tab: "Disaster help", sub: "earthquake tweets", color: C.cyan, name: "Disaster help detector", base: "BERTurk, dbmdz/bert-base-turkish-uncased", task: "Help or not", lower: true,
+      examples: [
+        { label: "An ordinary plan", tr: "Ben yarın arkadaş|ım|a gid|eceğ|im . Ora|da çok eylen|ip ev|e geri dön|eceğ|im .",
+          en: "I'll visit my friend tomorrow. I'll have fun there and come back home.", help: false,
+          why: "Nothing about a disaster and nothing requested, so it is not a help request." },
+        { label: "A trick sentence", tr: "Bugün HERHANGİ il|in|de deprem@trap ol|du . Çok kork|tuk . Ev|imiz darmaduman ol|du , şuan aile|m|le birlikte çadır|da@trap kal|ıyor|um . Durum çok kötü . Yardım@trap yeter|siz . Bir Afet@trap böyle yönet|il|me|meli .",
+          en: "There was an earthquake in SOME city today. We were very scared. Our home is wrecked and I'm staying in a tent with my family. Things are bad. Help is not enough. A disaster should not be managed like this.", help: false,
+          why: "I used the words earthquake, tent, help and disaster to trick it. The text complains but asks for nothing specific, and the model was not fooled." },
+        { label: "A real request", tr: "Sakarya@loc il|i@loc Serdivan@loc ilçe|si@loc kemalpaşa@loc mahalle|si@loc 180@loc sokak@loc Loca@loc rezidans@loc site|si|ne acil|en 2@need su@need 4@need battaniye@need 2@need çadır@need lazım . İletişim için telefon : 05XX@tel XXX@tel XX@tel XX@tel",
+          en: "Urgently need 2 water, 4 blankets and 2 tents at Loca residence, 180 street, Kemalpaşa, Serdivan, Sakarya. Contact phone: hidden here.", help: true,
+          extract: { loc: "Sakarya ili, Serdivan ilçesi, Kemalpaşa mahallesi, 180 sokak, Loca rezidans", need: ["2 su (water)", "4 battaniye (blankets)", "2 çadır (tents)"], tel: "Phone number found (hidden on this page)" } } ],
+      acc: 75 / 75, accSub: "75 of 75 test tweets",
+      metrics: [["1.00", "ROC AUC"], ["70/15/15", "train, validation, test split"], ["Weighted", "loss for uneven classes"]],
+      cm: { rows: ["Not help", "Help"], cols: ["Not help", "Help"], v: [[30, 0], [0, 45]] },
+      note: "The test set was small, so this perfect score should be read with care.",
+      stack: ["BERTurk", "PyTorch", "Class weights", "Regex extraction", "Django"] }
+  ];
+
+  const $ = id => document.getElementById(id);
+  const sec = $("bsc"), tabs = $("trTabs"), input = $("trInput"), out = $("trOut"), run = $("trRun"), steps = $("trSteps");
+  let cur = 0, ex = 0, busy = false, timers = [], dotsAnim = null;
+  const later = (fn, ms) => timers.push(setTimeout(fn, REDUCED ? 0 : ms));
+  const stopAll = () => { timers.forEach(clearTimeout); timers = []; busy = false; run.disabled = false; };
+
+  tabs.innerHTML = MODELS.map((m, i) => `<button type="button" role="tab" style="--k:${m.color}" data-i="${i}"><i></i>${m.tab}<small>${m.sub}</small></button>`).join("");
+  tabs.addEventListener("click", e => { const b = e.target.closest("button"); if (b) select(+b.dataset.i, 0); });
+  $("trExamples").addEventListener("click", e => { const b = e.target.closest("button"); if (b) { select(cur, +b.dataset.i); go(); } });
+  run.addEventListener("click", () => go());
+
+  function parse(str) {
+    const toks = [];
+    for (const raw of str.split(" ")) {
+      if (/^[.,!:?]$/.test(raw)) { if (toks.length) toks[toks.length - 1].punct += raw; continue; }
+      let t = raw, tag = "", lime = "";
+      const at = t.indexOf("@"); if (at > 0) { tag = t.slice(at + 1); t = t.slice(0, at); }
+      const ca = t.indexOf("^"); if (ca > 0) { lime = t.slice(ca + 1); t = t.slice(0, ca); }
+      toks.push({ parts: t.split("|"), tag, lime, punct: "" });
+    }
+    return toks;
+  }
+  function renderSentence(m, e) {
+    const toks = parse(e.tr);
+    input.className = "tr-input";
+    input.innerHTML = toks.map(t => `<span class="w"${t.lime ? ` data-lime="${t.lime}"` : ""}${t.tag ? ` data-tag="${t.tag}"` : ""}>${t.parts.map((p, i) => i ? `<span class="suf">${p}</span>` : p).join("")}</span>${t.punct ? `<span class="p">${t.punct}</span>` : ""}`).join(" ") + '<span class="scan"></span>';
+    $("trEn").textContent = e.en;
+  }
+
+  function setStep(n) {
+    [...steps.querySelectorAll("span")].forEach((s, i) => s.classList.toggle("on", i < n));
+    steps.querySelector("i").style.width = n ? `calc(${(Math.min(n, 4) - 1) / 3 * 100}% - ${n === 4 ? 12 : 0}px)` : "0";
+  }
+
+  function select(i, e) {
+    stopAll(); cur = i; ex = e;
+    const m = MODELS[i];
+    sec.style.setProperty("--t", m.color);
+    tabs.querySelectorAll("button").forEach((b, k) => b.classList.toggle("on", k === i));
+    $("trName").textContent = m.name; $("trBase").textContent = m.base; $("trTask").textContent = m.task;
+    $("trExamples").innerHTML = m.examples ? m.examples.map((x, k) => `<button type="button" data-i="${k}" class="${k === e ? "on" : ""}">${x.label}</button>`).join("") : "";
+    $("trExamples").style.display = m.examples ? "" : "none";
+    out.innerHTML = ""; setStep(0);
+    if (dotsAnim) { cancelAnimationFrame(dotsAnim.raf); dotsAnim = null; }
+    if (m.dots) { input.className = "tr-input"; input.innerHTML = "<canvas></canvas>"; $("trEn").textContent = "Each dot is 10 real test tweets. Press run to sort them by what the model predicted."; startDots(); }
+    else renderSentence(m, m.examples[e]);
+    report(m);
+  }
+
+  function go() {
+    if (busy) return;
+    const m = MODELS[cur];
+    busy = true; run.disabled = true; out.innerHTML = "";
+    if (m.dots) { if (!dotsAnim) startDots(); setStep(1); later(() => setStep(2), 350); later(() => setStep(3), 700); later(() => { dotsAnim.sort(); setStep(4); }, 1000); later(() => { offensiveOut(m); stopAll(); }, 2600); return; }
+    renderSentence(m, m.examples[ex]);
+    const words = [...input.querySelectorAll(".w")];
+    later(() => { setStep(1); input.classList.add("clean"); if (m.lower) input.classList.add("lower"); }, 150);
+    later(() => { setStep(2); input.classList.add("split"); }, 800);
+    later(() => {
+      setStep(3);
+      const scan = input.querySelector(".scan");
+      if (scan && !REDUCED) scan.animate([{ left: "-120px" }, { left: "100%" }], { duration: 1100, easing: "ease-in-out" });
+      words.forEach((w, k) => later(() => { w.classList.add("read"); later(() => w.classList.remove("read"), 260); }, k * Math.min(70, 1000 / words.length)));
+    }, 1500);
+    later(() => { setStep(4); words.forEach(w => w.classList.remove("read")); input.classList.add("done"); input.classList.remove("split"); m.id === "emo" ? emotionOut(m, m.examples[ex]) : disasterOut(m, m.examples[ex]); stopAll(); }, 2750);
+  }
+
+  function emotionOut(m, e) {
+    const win = e.probs.indexOf(Math.max(...e.probs));
+    out.innerHTML = `<div class="tr-bars">${EMO.map((c, i) => `<div class="tr-bar tr-pop${i === win ? " win" : ""}" style="animation-delay:${i * 60}ms"><span>${c[0]} <small>${c[1]}</small></span><div class="track"><div class="fill"></div></div><b>${e.probs[i].toFixed(3)}</b></div>`).join("")}</div>` +
+      (e.lime ? `<div class="tr-legend tr-pop" style="animation-delay:.35s"><span><i style="background:rgba(61,220,255,.42)"></i>Pushed towards ${EMO[win][1]}</span><span><i style="background:rgba(232,119,46,.3)"></i>Pushed against it</span><span style="color:var(--muted)">From the app's LIME view</span></div>`
+              : `<p class="small tr-pop" style="margin-top:12px;animation-delay:.35s">These are the real probabilities from the web app.</p>`);
+    requestAnimationFrame(() => requestAnimationFrame(() => out.querySelectorAll(".fill").forEach((f, i) => f.style.width = Math.max(1.5, e.probs[i] * 100) + "%")));
+  }
+  function disasterOut(m, e) {
+    let h = `<div class="tr-verdict tr-pop ${e.help ? "yes" : "no"}">${e.help ? "Help request" : "Not a help request"} <span style="font-weight:500;opacity:.75">(class ${e.help ? 1 : 0})</span></div>`;
+    if (e.why) h += `<p class="tr-why tr-pop" style="animation-delay:.15s">${e.why}</p>`;
+    if (e.extract) h += `<div class="tr-extract tr-pop" style="animation-delay:.25s">
+        <div><span style="color:var(--cyan)">Location</span>${e.extract.loc}</div>
+        <div><span style="color:var(--gold)">Needs</span>${e.extract.need.join(" · ")}</div>
+        <div><span style="color:var(--orange)">Contact</span>${e.extract.tel}</div></div>`;
+    out.innerHTML = h;
+  }
+  function offensiveOut(m) {
+    out.innerHTML = `<p class="tr-why tr-pop" style="margin-top:0"><b style="color:var(--ink)">7,464</b> tweets landed in the right box and <b style="color:var(--ink)">1,016</b> did not. The model missed <b style="color:var(--ink)">611</b> offensive tweets and wrongly flagged <b style="color:var(--ink)">405</b> harmless ones.</p>`;
+  }
+
+  /* offensive: 848 dots, each one 10 test tweets, sorted into the four boxes */
+  function startDots() {
+    const cv = input.querySelector("canvas"); if (!cv) return;
+    const g = cv.getContext("2d"), d = Math.min(2, devicePixelRatio || 1);
+    const w = cv.clientWidth, h = cv.clientHeight; cv.width = w * d; cv.height = h * d; g.setTransform(d, 0, 0, d, 0, 0);
+    const counts = [[411, 41], [61, 335]];   // [true not, true off] x [pred not, pred off], rounded to tens
+    const pad = w < 500 ? 8 : 14, top = 30, left = w < 500 ? 62 : 92;
+    const bw = (w - left - pad * 2) / 2, bh = (h - top - pad * 2) / 2;
+    const box = (r, c) => ({ x: left + c * (bw + pad), y: top + r * (bh + pad), w: bw, h: bh });
+    const R = rngFrom(7), dots = [];
+    for (let r = 0; r < 2; r++) for (let c = 0; c < 2; c++) {
+      const b = box(r, c), n = counts[r][c];
+      const aw = b.w - 16, ah = b.h - 46;          // space under the count label
+      let sp = Math.min(9, Math.sqrt(aw * ah / n));
+      let cols = Math.max(1, Math.floor(aw / sp));
+      while (Math.ceil(n / cols) * sp > ah && sp > 2) { sp -= .25; cols = Math.max(1, Math.floor(aw / sp)); }
+      for (let k = 0; k < n; k++) {
+        const tx = b.x + 8 + (k % cols) * sp + sp / 2, ty = b.y + b.h - 8 - Math.floor(k / cols) * sp - sp / 2;
+        dots.push({ x: R() * w, y: top + R() * (h - top), tx, ty, r, c, ph: R() * 6.28, delay: R() * 600 });
+      }
+    }
+    let sorted = false, t0 = 0;
+    const st = { raf: 0, sort() { sorted = true; t0 = performance.now(); } };
+    dotsAnim = st;
+    function frame(now) {
+      g.clearRect(0, 0, w, h);
+      g.font = (w < 500 ? "600 10.5px" : "600 12px") + " Inter, sans-serif"; g.fillStyle = "rgba(185,195,211,.8)"; g.textAlign = "center";
+      const nar = w < 500;
+      g.fillText(nar ? "Said: not off." : "Predicted not offensive", box(0, 0).x + bw / 2, 16); g.fillText(nar ? "Said: offensive" : "Predicted offensive", box(0, 1).x + bw / 2, 16);
+      g.textAlign = "right";
+      g.fillText("Really", left - 8, box(0, 0).y + bh / 2 - 6); g.fillText("not off.", left - 8, box(0, 0).y + bh / 2 + 9);
+      g.fillText("Really", left - 8, box(1, 0).y + bh / 2 - 6); g.fillText("offensive", left - 8, box(1, 0).y + bh / 2 + 9);
+      g.textAlign = "left";
+      for (let r = 0; r < 2; r++) for (let c = 0; c < 2; c++) {
+        const b = box(r, c), ok = r === c;
+        g.fillStyle = ok ? "rgba(61,220,255,.05)" : "rgba(232,119,46,.06)"; g.strokeStyle = ok ? "rgba(61,220,255,.28)" : "rgba(232,119,46,.35)";
+        g.beginPath(); g.roundRect ? g.roundRect(b.x, b.y, b.w, b.h, 10) : g.rect(b.x, b.y, b.w, b.h); g.fill(); g.stroke();
+        if (sorted) {
+          const k = Math.min(1, (now - t0 - 900) / 500);
+          if (k > 0) { g.globalAlpha = k; g.fillStyle = ok ? C.cyan2 : "#ffb39b"; g.font = (w < 500 ? "700 13px" : "700 15px") + " Space Grotesk, sans-serif";
+            g.fillText([[4113, 405], [611, 3351]][r][c].toLocaleString("en"), b.x + 10, b.y + 20);
+            g.font = "500 11px Inter, sans-serif"; g.fillStyle = "rgba(185,195,211,.8)"; g.fillText(ok ? "correct" : (r === 0 ? "false alarm" : "missed"), b.x + 10, b.y + 34); g.globalAlpha = 1; }
+        }
+      }
+      for (const p of dots) {
+        let x, y;
+        if (sorted) { const k = clamp((now - t0 - p.delay) / 900, 0, 1), e = 1 - Math.pow(1 - k, 3); x = lerp(p.x, p.tx, e); y = lerp(p.y, p.ty, e); if (k >= 1) { p.x = p.tx; p.y = p.ty; } }
+        else { p.ph += .02; x = p.x + Math.sin(p.ph) * 3; y = p.y + Math.cos(p.ph * .8) * 3; }
+        g.fillStyle = sorted && (now - t0 - p.delay) > 300 ? (p.r === p.c ? C.cyan : C.orange) : (p.r === 1 ? "rgba(232,119,46,.85)" : "rgba(143,240,255,.8)");
+        g.beginPath(); g.arc(x, y, w < 500 ? 1.7 : 2.5, 0, 7); g.fill();
+      }
+      st.raf = requestAnimationFrame(frame);
+    }
+    st.raf = requestAnimationFrame(frame);
+    if (REDUCED) { st.sort(); t0 = -5000; }
+  }
+
+  /* report card */
+  function report(m) {
+    const accEl = $("trAcc"), to = m.acc * 100, st = performance.now(), from = parseFloat(accEl.textContent) || 0;
+    (function a(n) { const k = Math.min(1, (n - st) / 700), e = 1 - Math.pow(1 - k, 3); const v = lerp(from, to, e); accEl.textContent = (k >= 1 && to === 100 ? "100" : v.toFixed(1)) + "%"; if (k < 1) requestAnimationFrame(a); })(st);
+    const sub = $("trAccSub"); sub.textContent = m.accSub; sub.style.background = "color-mix(in srgb, " + m.color + " 14%, transparent)"; sub.style.color = m.color;
+    $("trMetrics").innerHTML = m.metrics.map(([b, s]) => `<div><b>${b}</b><span>${s}</span></div>`).join("");
+    $("trCmTitle").innerHTML = 'Confusion matrix · rows are the truth, columns are the prediction · <span style="color:var(--cyan)">correct</span> / <span style="color:var(--orange)">wrong</span>';
+    const cm = m.cm, n = cm.cols.length, mx = Math.max(...cm.v.flat());
+    const el = $("trCm"); el.className = "tr-cm" + (n > 2 ? " small" : "");
+    el.style.gridTemplateColumns = `${n > 2 ? "58px" : "92px"} repeat(${n}, 1fr)`;
+    let h = `<div></div>` + cm.cols.map(c => `<div class="lab">${c}</div>`).join("");
+    cm.v.forEach((row, r) => {
+      h += `<div class="lab row">${cm.rows[r]}</div>`;
+      row.forEach((v, c) => {
+        const k = v ? Math.log(1 + v) / Math.log(1 + mx) : 0, ok = r === c;
+        const bg = v === 0 ? "rgba(255,255,255,.03)" : ok ? `color-mix(in srgb, #3ddcff ${Math.round(18 + k * 62)}%, #0b1628)` : `rgba(232,119,46,${.16 + k * .5})`;
+        h += `<div class="cell" style="background:${bg}" data-r="${r}" data-c="${c}">${v.toLocaleString("en")}</div>`;
+      });
+    });
+    el.innerHTML = h;
+    $("trTip").textContent = "Hover or tap a box to see what it means.";
+    $("trNote").textContent = m.note;
+    $("trStack").innerHTML = m.stack.map(s => `<span class="chip">${s}</span>`).join("");
+  }
+  const tipFor = cell => {
+    const m = MODELS[cur], r = +cell.dataset.r, c = +cell.dataset.c, v = m.cm.v[r][c];
+    const unit = m.id === "emo" ? "texts" : "tweets";
+    return r === c ? `${v.toLocaleString("en")} ${unit} were really "${m.cm.rows[r]}" and the model got them right.`
+                   : `${v.toLocaleString("en")} ${unit} were really "${m.cm.rows[r]}" but the model said "${m.cm.cols[c]}".`;
+  };
+  $("trCm").addEventListener("pointerover", e => { const c = e.target.closest(".cell"); if (c) $("trTip").textContent = tipFor(c); });
+  $("trCm").addEventListener("click", e => { const c = e.target.closest(".cell"); if (c) $("trTip").textContent = tipFor(c); });
+
+  select(0, 0);
+  let auto = false;
+  new IntersectionObserver(es => { if (es[0].isIntersecting && !auto) { auto = true; setTimeout(go, 500); } }, { threshold: .45 }).observe(input);
+  let rT; addEventListener("resize", () => { clearTimeout(rT); rT = setTimeout(() => { if (MODELS[cur].dots && !busy) select(cur, 0); }, 250); });
+})();
 
 /* =====================================================================
    JOURNEY
